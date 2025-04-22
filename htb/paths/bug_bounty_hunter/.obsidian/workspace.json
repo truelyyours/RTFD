@@ -1,0 +1,187 @@
+{
+  "main": {
+    "id": "a77f4ab120298e89",
+    "type": "split",
+    "children": [
+      {
+        "id": "9d99a3a2e71dbd0e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2d31a1f7f38725ce",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d21b3151a1b8d396",
+    "type": "split",
+    "children": [
+      {
+        "id": "9889d14a18cdf91f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1acaacc90b32d6b4",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "9466d08e444329ee",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "95a1b04895a1e2ed",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "fa2c3cf6f1446bfb",
+    "type": "split",
+    "children": [
+      {
+        "id": "d52fb8d495b5e067",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7a0ff9f99c704f0f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Back End Components.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Back End Components"
+            }
+          },
+          {
+            "id": "670c6e12ac0936fd",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Welcome.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Welcome"
+            }
+          },
+          {
+            "id": "b620449c9b254fe8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "c0fca2e29cb6ebb1",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Welcome.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Welcome"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "2d31a1f7f38725ce",
+  "lastOpenFiles": [
+    "Back End Components.md",
+    "Front End Vulnerabilities.md",
+    "web-server-requests.jpg",
+    "backend-server 1.jpg",
+    "view_source1.webp",
+    "Front End Components.md",
+    "Introduction To Web Application.md",
+    "Web Requests.md",
+    "backend-server.jpg",
+    "frontend-components.jpg",
+    "image5-12.png",
+    "many-server-many-db-arch.jpg",
+    "many-server-one-db-arch.jpg",
+    "one-server-arch.jpg",
+    "client-server-model.jpg",
+    "path_bug_bounty_hunter/Web Requests.md",
+    "path_bug_bounty_hunter/README.md",
+    "path_bug_bounty_hunter/Introduction To Web Application.md",
+    "path_bug_bounty_hunter",
+    "README.md",
+    "Welcome.md",
+    "Complete.md"
+  ]
+}
