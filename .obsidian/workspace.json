@@ -166,8 +166,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -180,7 +179,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f33c03f035fe5824",
+  "active": "0268d209316a1918",
   "lastOpenFiles": [
     "Untitled.md",
     "htb/Escape Two/Solution.md",

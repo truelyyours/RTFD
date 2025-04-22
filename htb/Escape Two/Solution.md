@@ -145,7 +145,7 @@ As we have SMB port open, we use `smbmap` to enumerate the directories recursive
 -----------------------------------------------------------------------------
 SMBMap - Samba Share Enumerator v1.10.5 | Shawn Evans - ShawnDEvans@gmail.com
                      https://github.com/ShawnDEvans/smbmap
-                                                                                               
+
 [+] IP: 10.10.11.51:445	Name: sequel.htb          	Status: Authenticated
 	Disk                                                  	Permissions	Comment
 	----                                                  	-----------	-------
