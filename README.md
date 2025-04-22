@@ -1,0 +1,2 @@
+# RTFD
+All the documentation
