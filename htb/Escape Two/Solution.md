@@ -264,6 +264,7 @@ From this output, I can see there are a bunch of `sequel.htb` accounts. One pecu
 
 #TODO NEED TO HAVE THE COMMAND SEPERATE FROM THE OUTPUT
 ## Login to remote MSSQL server
+This is MS-SQL and not MySQL! SQL queries don't exactly work here! :(
 I use the `impacket-mssqlclient` to connect to the above account:
 ```bash
 ┌──(truelyyours㉿kali)-[~/EscapeTwo_HTB]
@@ -282,6 +283,15 @@ SQL (sa  dbo@master)> ls
 
 ```
 Now, this is MSSQL and not MySQL. We list the databases and look at the tables.
+```sql
+SQL (sa  dbo@master)> select name from sys.databases;
+name     
+------   
+master   
+tempdb   
+model    
+msdb     
+```
 
 #TODO add details about MSSQL prompt and output
 
