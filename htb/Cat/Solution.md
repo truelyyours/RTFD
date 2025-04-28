@@ -1,8 +1,7 @@
 This is a linux machine with ip `10.10.11.53`. Let's `nmap` it.
 Remember to add `10.10.11.53 cat.htb` to you `/etc/hosts`
 `sudo nmap 10.10.11.51  -sC -sV -Pn -A`
-```bash
-                                                                                                                              
+```bash                                                        
 ┌──(truelyyours㉿kali)-[~/EscapeTwo_HTB]
 └─$ nmap 10.10.11.53  -sC -sV -Pn -A
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-04-28 18:11 EDT
@@ -43,4 +42,6 @@ OS and Service detection performed. Please report any incorrect results at https
 Nmap done: 1 IP address (1 host up) scanned in 13.57 seconds
 ```
 
+The login request is a simple `GET` request for some reason: `http://cat.htb/join.php?loginUsername=henlo&loginPassword=ppaass&loginForm=Login`
 
+`http://cat.htb/join.php?username=username90&email=username90%40gmail.com&password=verystrongpassword&registerForm=Register`
