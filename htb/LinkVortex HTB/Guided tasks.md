@@ -66,7 +66,7 @@ ________________________________________________
  :: Filter           : Response words: 14
 ________________________________________________
 
-dev                     [Status: 200, Size: 2538, Words: 670, Lines: 116, Duration: 53ms]
+**dev**                     [Status: 200, Size: 2538, Words: 670, Lines: 116, Duration: 53ms]
 :: Progress: [20478/20478] :: Job [1/1] :: 862 req/sec :: Duration: [0:00:24] :: Errors: 0 ::
 ```
 Looks like we have `dev.linkvortex.htb` available. So, I add it to `/etc/hosts` and checkout the URL.
