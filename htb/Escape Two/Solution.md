@@ -358,3 +358,17 @@ PS C:\Windows\system32>
 ```
 
 Of course, I have to run a local `nc` server and listen to a particular port.
+
+list users
+```powershell
+PS C:\> net user
+
+User accounts for \\DC01
+
+-------------------------------------------------------------------------------
+Administrator            ca_svc                   Guest                    
+krbtgt                   michael                  oscar                    
+rose                     ryan                     sql_svc                  
+The command completed successfully.
+```
+
