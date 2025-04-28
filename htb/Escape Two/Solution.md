@@ -1,7 +1,7 @@
 As is common in real life Windows pentests, you will start this box with credentials for the following account: rose / KxEPkKe6R8su
 
 First I run the nmap scan:
-sudo nmap 10.10.11.51  -sC -sV -Pn
+`sudo nmap 10.10.11.51  -sC -sV -Pn`
 ```bash
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-04-21 18:21 EDT
 Verbosity Increased to 1.
