@@ -22,3 +22,20 @@ The _-c_ flag used for community strings, which in this case is public.
 
 `The _-v_ flag is used for version, _-c_ used for community string and the last number is _oid_`
 The _-v_ flag is used for version, _-c_ used for community string and the last number is _oid_
+
+Then we will have to brute force password on these services and access files.
+# Mitigation
+
+Some best practices which we can use for those services are as following:
+
+DNS Best Practices:
+
+- Restrict Zone Transfers: Limit zone transfers (AXFR) to trusted IP addresses only.
+- Hide Internal Information: Avoid exposing sensitive internal hostnames in public DNS. Use separate internal and external zones.
+- Monitor DNS Logs: Regularly review DNS logs for suspicious or abnormal query patterns.
+
+SNMP Best Practices:
+
+- Change Default Community Strings: Replace default strings (public, private) with strong, unique ones. Use SNMP v3 for enhanced security authentication and encryption.
+- Use SNMP v3: Upgrade to SNMP v3 if possible. Disable SNMP v1/v2 if not needed.
+- Monitor SNMP Requests: Regularly check SNMP logs for unusual or unauthorized access attempts.
