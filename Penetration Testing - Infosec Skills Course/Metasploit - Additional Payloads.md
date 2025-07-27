@@ -10,3 +10,8 @@ Categories of Payloads:
 - Larger, feature-rich payloads sent after the stager establishes a connection.
 - Stages offer advanced capabilities, such as a full interactive session or remote control.
 - Example: `meterpreter` (a robust, interactive shell with advanced tools for post-exploitation).
+### Reverse Shell Payloads:
+
+The target system initiates a connection back to the attacker's machine.
+Useful when the target is behind a firewall or NAT. Example:
+`linux/meterpreter/reverse_tcp`
