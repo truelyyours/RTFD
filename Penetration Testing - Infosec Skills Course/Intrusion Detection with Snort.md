@@ -55,3 +55,5 @@ Now, navigate back to the _kali linux machine_, first press _CTRL+C_ to determin
 `ssh 192.168.1.100`
 
 When prompted to continue, press _yes_. Then, go back to the _ubuntu machine_, and you will see an alert for the service that someone is trying to connect to via SSH.
+# Create a rule for FTP
+
