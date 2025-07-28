@@ -1,0 +1,1 @@
+In the context of SQL injection, ORDER BY n -- // is typically used to determine the number of columns in a SQL query's SELECT statement when the exact structure of the query is unknown to the attacker.(where n is an integer)
