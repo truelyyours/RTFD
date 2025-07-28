@@ -56,4 +56,15 @@ Now, navigate back to the _kali linux machine_, first press _CTRL+C_ to determin
 
 When prompted to continue, press _yes_. Then, go back to the _ubuntu machine_, and you will see an alert for the service that someone is trying to connect to via SSH.
 # Create a rule for FTP
+Now we will try to trigger an alert for FTP services. The procedure for implementing this is the same, with just a few minor differences.
+
+Enter the following command in _local.rules_:
+`alert tcp any any -> $HOME_NET 21 (msg:"FTP authentication detected!";sid:1000003;)`
+
+Start the monitoring process, using the following command:
+`sudo snort -i ens32 -c /etc/snort/snort.conf -A console`
+
+Now, return to the _kali linux machine_, press the _CTRL+C_ to determine the ssh login and enter the following command:
+`ftp 192.168.1.100`
+
 
