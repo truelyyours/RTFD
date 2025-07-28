@@ -66,5 +66,17 @@ Start the monitoring process, using the following command:
 
 Now, return to the _kali linux machine_, press the _CTRL+C_ to determine the ssh login and enter the following command:
 `ftp 192.168.1.100`
+# Create a rule for XSS
+_XSS (Cross-Site Scripting_) is a vulnerability found in web pages. It can be exploited on any page that allows the injection of code into HTML. The main issue with this vulnerability is improper input validation.
+
+Open a terminal and navigate to local.rules file, using the following command:
+`sudo nano /etc/snort/rules/local.rules`
+
+Now, add the rule using the following command:
+`alert tcp any any -> $HOME_NET any (msg:"Possible XSS attack detected"; content:"%3Cscript%3E"; sid:1000006; rev:1;)`
+
+Start the monitoring process, using the following command:
+`sudo snort -i ens32 -c /etc/snort/snort.conf -A console`
+
 
 
