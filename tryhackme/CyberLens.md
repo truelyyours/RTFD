@@ -69,6 +69,43 @@ Nothing much directly so we move on to `GoBuster`. Do some path traversal and se
 `gobuster dir -w /usr/share/wordlists/dirb/common.txt -u http://10.201.76.93 -e`
 
 This will give us a lot of interesting stuff. More importantly it give us paths such as `/images`, `/js` and `/css`. I think the `/js` would be interesting. `/images` shows images that are being used across the website.
+```
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.201.76.93
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/seclists/Discovery/Web-Content/big.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Expanded:                true
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+http://10.201.76.93/.htaccess            (Status: 403) [Size: 199]
+http://10.201.76.93/.htpasswd            (Status: 403) [Size: 199]
+http://10.201.76.93/Images               (Status: 301) [Size: 235] [--> http://10.201.76.93/Images/]
+http://10.201.76.93/aux                  (Status: 403) [Size: 199]
+http://10.201.76.93/cgi-bin/             (Status: 403) [Size: 199]
+http://10.201.76.93/com3                 (Status: 403) [Size: 199]
+http://10.201.76.93/com2                 (Status: 403) [Size: 199]
+http://10.201.76.93/com1                 (Status: 403) [Size: 199]
+http://10.201.76.93/com4                 (Status: 403) [Size: 199]
+http://10.201.76.93/con                  (Status: 403) [Size: 199]
+http://10.201.76.93/css                  (Status: 301) [Size: 232] [--> http://10.201.76.93/css/]
+http://10.201.76.93/images               (Status: 301) [Size: 235] [--> http://10.201.76.93/images/]
+http://10.201.76.93/js                   (Status: 301) [Size: 231] [--> http://10.201.76.93/js/]
+http://10.201.76.93/lpt1                 (Status: 403) [Size: 199]
+```
 
-`http://10.201.76.93/js/image-extractor.js` here, you can see that there is port **61777** and pat `/meta` that is being used internally. Accessing this gives you a Apache 1.7 Tika server! Boom. Now let's see if there is any security vulnerability for this version of Apache server!
+`http://10.201.76.93/js/image-extractor.js` here, you can see that there is port **61777** and pat `/meta` that is being used internally.
 
+![[Pasted image 20250731201533.png]]
+
+Accessing this gives you a Apache 1.7 Tika server! Boom. Now let's see if there is any security vulnerability for this version of Apache server!
+
+One google search and we have [RCE (CVE-2018–1335)](https://rhinosecuritylabs.com/application-security/exploiting-cve-2018-1335-apache-tika/)  
+and https://www.exploit-db.com/exploits/47208. Now we use the `metasploit` module. It has a module for this CVE so that's convenient!
