@@ -1,0 +1,69 @@
+So, simply visit the IP that you get form the machine and you get to a website where you can upload images and get it's metadata.
+
+We do usual stuff, `nmap -sV -sC cyberlens.thm -vv`
+```
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-07-31 19:48 EDT
+Nmap scan report for cyberlens.thm (10.201.76.93)
+Host is up (0.32s latency).
+Not shown: 994 closed tcp ports (reset)
+PORT     STATE SERVICE    VERSION
+80/tcp   open  tcpwrapped
+|_http-title: CyberLens: Unveiling the Hidden Matrix
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Apache/2.4.57 (Win64)
+135/tcp  open  tcpwrapped
+139/tcp  open  tcpwrapped
+445/tcp  open  tcpwrapped
+3389/tcp open  tcpwrapped
+|_ssl-date: 2025-07-31T23:57:40+00:00; -1s from scanner time.
+| rdp-ntlm-info: 
+|   Target_Name: CYBERLENS
+|   NetBIOS_Domain_Name: CYBERLENS
+|   NetBIOS_Computer_Name: CYBERLENS
+|   DNS_Domain_Name: CyberLens
+|   DNS_Computer_Name: CyberLens
+|   Product_Version: 10.0.17763
+|_  System_Time: 2025-07-31T23:57:26+00:00
+| ssl-cert: Subject: commonName=CyberLens
+| Not valid before: 2025-07-30T23:43:27
+|_Not valid after:  2026-01-29T23:43:27
+5985/tcp open  tcpwrapped
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.95%E=4%D=7/31%OT=5985%CT=1%CU=40113%PV=Y%DS=5%DC=T%G=Y%TM=688C0
+OS:2F5%P=x86_64-pc-linux-gnu)SEQ(SP=103%GCD=1%ISR=10D%TI=I%CI=RD%II=I%SS=S%
+OS:TS=U)SEQ(SP=104%GCD=1%ISR=10F%TI=RD%CI=RD%II=I%TS=U)SEQ(SP=105%GCD=1%ISR
+OS:=10A%TI=RD%CI=RD%II=I%TS=U)SEQ(SP=105%GCD=1%ISR=10C%TI=RD%CI=I%II=RI%TS=
+OS:U)SEQ(SP=108%GCD=1%ISR=10A%TI=I%CI=RD%TS=U)OPS(O1=M508NW8NNS%O2=M508NW8N
+OS:NS%O3=M508NW8%O4=M508NW8NNS%O5=M508NW8NNS%O6=M508NNS)WIN(W1=FFFF%W2=FFFF
+OS:%W3=FFFF%W4=FFFF%W5=FFFF%W6=FF70)ECN(R=Y%DF=Y%T=80%W=FFFF%O=M508NW8NNS%C
+OS:C=Y%Q=)T1(R=Y%DF=Y%T=80%S=O%A=S+%F=AS%RD=0%Q=)T2(R=Y%DF=Y%T=80%W=0%S=Z%A
+OS:=S%F=AR%O=%RD=0%Q=)T3(R=Y%DF=Y%T=80%W=0%S=Z%A=O%F=AR%O=%RD=0%Q=)T4(R=Y%D
+OS:F=Y%T=80%W=0%S=A%A=O%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=80%W=0%S=Z%A=S+%F=AR%O
+OS:=%RD=0%Q=)T6(R=Y%DF=Y%T=80%W=0%S=A%A=O%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=80%W
+OS:=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=80%IPL=164%UN=0%RIPL=G%RID=G%R
+OS:IPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=80%CD=Z)
+
+Network Distance: 5 hops
+
+Host script results:
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2025-07-31T23:57:30
+|_  start_date: N/A
+|_clock-skew: mean: -1s, deviation: 0s, median: -1s
+
+TRACEROUTE (using port 80/tcp)
+HOP RTT       ADDRESS
+1   501.15 ms 10.2.0.1
+2   ... 4
+5   697.25 ms cyberlens.thm (10.201.76.93)
+
+OS and Service detection performed. Please report any incorrect
+```
+
+Nothing much directly so we move on to `GoBuster`. Do some path traversal and see if we can find and access any files.
+
