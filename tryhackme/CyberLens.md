@@ -66,4 +66,9 @@ OS and Service detection performed. Please report any incorrect
 ```
 
 Nothing much directly so we move on to `GoBuster`. Do some path traversal and see if we can find and access any files.
+`gobuster dir -w /usr/share/wordlists/dirb/common.txt -u http://10.201.76.93 -e`
+
+This will give us a lot of interesting stuff. More importantly it give us paths such as `/images`, `/js` and `/css`. I think the `/js` would be interesting. `/images` shows images that are being used across the website.
+
+`http://10.201.76.93/js/image-extractor.js` here, you can see that there is port **61777** and pat `/meta` that is being used internally. Accessing this gives you a Apache 1.7 Tika server! Boom. Now let's see if there is any security vulnerability for this version of Apache server!
 
