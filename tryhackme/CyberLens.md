@@ -145,4 +145,6 @@ Go to `C:\Users\CyberLens\Desktop` and the flag is in `user.txt`.
 
 And we have the user flag 🎉😎!
 
+Now we'll try to get root! A quick and dirty `getsystem` from `meterpreter` didn’t work, so I’ll have to get more inventive.
+
 
