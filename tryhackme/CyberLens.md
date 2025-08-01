@@ -109,6 +109,8 @@ Accessing this gives you a Apache 1.7 Tika server! Boom. Now let's see if there 
 
 One google search and we have [RCE (CVE-2018–1335)](https://rhinosecuritylabs.com/application-security/exploiting-cve-2018-1335-apache-tika/)  
 and https://www.exploit-db.com/exploits/47208. Now we use the `metasploit` module. It has a module for this CVE so that's convenient!
+
+We can do `searchsploit tika` it will give you the details of all tika exploits that are present on this system. It will tell exact path if you use `-m`. 
 ```bash
 msfconsole
 use exploit/windows/http/apache_tika_jp2_jscript
