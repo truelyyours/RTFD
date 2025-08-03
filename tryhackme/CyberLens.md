@@ -1,6 +1,6 @@
 So, simply visit the IP that you get form the machine and you get to a website where you can upload images and get it's metadata.
 
-We do usual stuff, `nmap -sV -sC cyberlens.thm -vv`
+We do usual stuff, `nmap -sV -sC cyberlens.thm -vv -Pn`
 ```
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-07-31 19:48 EDT
 Nmap scan report for cyberlens.thm (10.201.76.93)
