@@ -62,4 +62,29 @@ To read the email using Mutt, enter the following command:
 `mutt`
 
 When prompted, press _enter_ to create the _/root/Mail_ directory.
+# Reading Email
 
+> Note: It is crucial to follow the instructions carefully in this step and the next.
+
+The received email should be visible in the inbox. Press _Enter_ to open it.
+Next, press _v_ to view the attachment and _enter_ to open it.
+
+The phishing email will display the download link. Press _CTRL + B_ to click on it, then press _enter twice_.
+
+This will open the URL in your default browser. Choose _Save File_ and click _OK_ to download the file.
+
+### Installing Package
+
+_dpkg_ is the Debian Package Manager, a command-line tool used to install, remove, and manage packages on Debian-based systems. The dpkg tool is responsible for unpacking and installing individual package files in the .deb format.
+
+Navigate to the Downloads directory where the downloaded file is located.
+
+cd /root/Downloads
+
+Afterwards, attempt to install the downloaded digitemp.deb package:
+
+sudo dpkg -i digitemp.deb
+
+The -i option stands for install.
+
+The output indicates that the package was installed successfully
