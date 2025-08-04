@@ -82,8 +82,7 @@ Navigate to the Downloads directory where the downloaded file is located.
 cd /root/Downloads
 
 Afterwards, attempt to install the downloaded digitemp.deb package:
-
-sudo dpkg -i digitemp.deb
+`sudo dpkg -i digitemp.deb`
 
 The -i option stands for install.
 
