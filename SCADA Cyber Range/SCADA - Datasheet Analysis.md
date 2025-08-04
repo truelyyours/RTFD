@@ -48,3 +48,14 @@ AS-P contains several ports, including two 10/100 Ethernet ports, two RS-485 por
 In building automation, Web Services based on open standards like SOAP and REST play a critical role. They allow building automation systems to consume third-party data over the web using standard protocols for exchanging information between different systems. This capability makes it easier for building automation systems to communicate with external systems such as weather forecasting or energy management platforms.
 
 By using these web services, building automation systems can make better-informed decisions about managing HVAC systems, lighting, and other building systems. Open standards for web services are crucial as they ensure seamless interoperability between different systems without requiring custom integrations or proprietary protocols.
+# eMMC Memory
+
+In building automation systems, controllers such as the AS-P play a crucial role in controlling and managing various devices, systems, and sensors. With regard to storing and processing large amounts of data in real-time, eMMC (embedded MultiMediaCard) memory is an essential component of these controllers. eMMC memory is a type of non-volatile storage that is integrated into the controller's circuit board, providing reliable and efficient storage for critical data and software.
+
+One of the key benefits of eMMC memory is its fast read and write speed, which is essential for quickly retrieving and storing data from various connected devices and sensors. Additionally, memory capacity is also an important factor to consider when selecting a controller, as it determines the amount of data that can be stored.
+# Bacnet Default Port
+
+The AS-P controller can communicate with different devices and systems in a building automation network, thanks to the wide range of protocols it supports. These protocols, like BACnet, LonWorks, Modbus, and SNMP, are commonly used in building automation systems.
+
+Additionally, the controller can communicate over networks using IP-based protocols such as HTTP, HTTPS, FTP, and SMTP. This flexibility in protocol support enables the AS-P to integrate with a variety of devices and systems, making it a flexible and robust building automation controller.
+**47808**
