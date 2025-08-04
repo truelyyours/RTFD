@@ -129,3 +129,11 @@ We find another key "secret" and we can again do SNMP walk:
 
 The **hrSWRunName** MIB is a standard Management Information Base (MIB) that allows network administrators to monitor the resources of a host computer using SNMP. This MIB is used to retrieve the names of running processes on a host computer along with their Process IDs. The term **hrSWRunName** is formed by combining "Host Resources" (hr) and "Software Running" (SWRun), and the "Name" suffix indicates that this MIB returns the names of the running software on the target device.
 `snmpwalk -v 2c -c secret student hrSWRunName`
+# Network Information
+
+SNMP is a protocol that offers extensive information, and it is worthwhile for network administrators to invest time in exploring the available OIDs/MIBs to understand the information they can provide. In this step, network information related to the target device that was not previously accessible using the "public" community string will be retrieved.
+
+The **tcpConnLocalPort** MIB is a specific OID that enables network administrators to obtain information about open TCP ports on a network device. This MIB retrieves the local port numbers associated with active TCP connections on the target device.
+
+To retrieve a list of open TCP ports on the device, execute the following command:
+`snmpwalk -v 2c -c secret student tcpConnLocalPort`
