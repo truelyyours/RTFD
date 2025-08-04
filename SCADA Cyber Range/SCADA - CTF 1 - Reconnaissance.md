@@ -40,4 +40,31 @@ The -a option sets the slave address (or unit identifier).
 Now that the initial setup of the lab is completed, this CTF is all about reconnaissance.
 
 To complete this step you will need to open a _new terminal_ and scan open ports on the target to discover open TCP ports commonly used by ICS/SCADA protocols.
+# Identifying Protocols
+
+Using the discovered port numbers, identify the associated protocols.
+
+There are two protocols. Protocol 1, running on port 502, is very common and often used throughout the labs.
+
+Protocol 2 is new for these labs but is also very common. This protocol uses two of the three ports discovered. This protocol may be difficult to identify by scanning or googling, so you may need to try an actually connect to one of the ports on 172.17.0.2.
+(The port is 50100. It is a Kamstrup server ig? KAP server.)
+After you find the port, use the following command to view the service menu:
+`H`
+
+To exit the telnet session, enter:
+`Q`
+### Enumerating Devices
+
+Now that you know what devices you are working with it is time to find some more specific information about the target.
+
+For the device associated with Protocol 1 (port 502), find its unit ID using one of the tools you've used in the labs.
+`cd /home/PLCScan`
+`python2 plcscan.py 172.17.0.2 --brute-uid`
+
+A useful tool for completing this lab is pre-installed on the system and can be found in the /home/PLCscan directory.
+
+Run the script to read the value of Energy in hi-res.
+`python2 kamstrup.py 172.17.0.2`
+
+The script output will showcase the measured data values obtained.
 

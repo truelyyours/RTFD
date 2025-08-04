@@ -99,30 +99,3 @@ Now enter run to start the scan.
 
 The scan successfully found the simulated Modbus device.
 **4**
-# Identifying Protocols
-
-Using the discovered port numbers, identify the associated protocols.
-
-There are two protocols. Protocol 1, running on port 502, is very common and often used throughout the labs.
-
-Protocol 2 is new for these labs but is also very common. This protocol uses two of the three ports discovered. This protocol may be difficult to identify by scanning or googling, so you may need to try an actually connect to one of the ports on 192.168.1.101.
-
-After you find the port, use the following command to view the service menu:
-`H`
-
-To exit the telnet session, enter:
-`Q`
-### Enumerating Devices
-
-Now that you know what devices you are working with it is time to find some more specific information about the target.
-
-For the device associated with Protocol 1 (port 502), find its unit ID using one of the tools you've used in the labs.
-`cd /home/PLCScan`
-`python2 plcscan.py 172.17.0.2 --brute-uid`
-
-A useful tool for completing this lab is pre-installed on the system and can be found in the /home/PLCscan directory.
-
-Run the script to read the value of Energy in hi-res.
-`python2 kamstrup.py 172.17.0.2`
-
-The script output will showcase the measured data values obtained.

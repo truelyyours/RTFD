@@ -25,8 +25,7 @@ To display the help menu for Diagslave, enter:
 The slave ID uniquely identifies the Modbus device on the network and is used by the Modbus master to address individual devices.
 
 To start a Modbus TCP slave with the address 123 using the diagslave tool, run the following command.
-
-sudo ./diagslave -m tcp -a 123
+`sudo ./diagslave -m tcp -a 123`
 
 The _-m_ option specifies the Modbus protocol for communication, the _-a_ option sets the Modbus address or slave ID, and the slave process is initiated on TCP port 123, where it listens for incoming Modbus TCP messages from the master.
 
