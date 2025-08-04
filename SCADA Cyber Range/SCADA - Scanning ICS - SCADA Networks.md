@@ -75,10 +75,26 @@ _Siemens S7 PLC_ devices from the S7 300/400 family use the S7comm protocol for 
 
 The scan detects PLC devices over s7comm, a protocol used by the Siemens S7 300/400 family. Additionally, the scan gathers information about the device, such as the type, system name, serial number, and version.
 `sudo nmap -Pn -sT -p102 192.168.1.102`
-
 ### Enumerating BACnet
 
 _BACnet_ devices are commonly used to interconnect and control HVAC, power, ventilation, and other components in building automation systems. Nmap scans can gather various information from these devices, such as vendor, device name, serial number, description, location, and firmware version. Typically, the available information includes the device's location, name, description, vendor ID, and firmware version.
+`sudo nmap -Pn -sU -p47808 192.168.1.102`
+# Enumerating Ethernet/IP devices
 
-sudo nmap -Pn -sU -p47808 192.168.1.102
+Ethernet/IP is a very popular protocol used in industrial systems that employs Ethernet as the transport layer and CIP for providing services and profiles needed for applications. Ethernet/IP devices from various vendors usually operate on UDP port 44818. Using Nmap's scripting engine (NSE), we can gather information such as vendor name, product name, serial number, device type, product code, internal IP address, and version.
+`sudo nmap -Pn -sU -p44818 --script enip-info 192.168.1.102`
+### Msfconsole
 
+In addition, to exploit modules, Metasploit includes hundreds of auxiliary modules that perform scanning, fuzzing, sniffing, and other essential tasks. Issue the following command to start Metasploit Framework:
+`msfconsole`
+
+Metasploit includes several SCADA-specific auxiliary modules. Use the modbusdetect, which scans the provided IP range for Modbus devices.
+`use auxiliary/scanner/scada/modbusdetect`
+
+Set the RHOST of the target to check for the Modbus device.
+`set RHOST 192.168.1.102`
+
+Now enter run to start the scan.
+`run`
+
+The scan successfully found the simulated Modbus device.
