@@ -51,15 +51,15 @@ To obtain the password of the access point from the WEP capture file, run the fo
 `aircrack-ng wifihacking/wepcapture.cap
 
 Allow the command to run for some time as **aircrack-ng** tries to calculate the key using the provided .cap file.
-
 ### Cracking WPA2
 
 _Airmon-ng_, _airodump-ng_, and _aireplay-ng_ were used to capture the 4-way handshake packets containing the WPA2 PSK. The captured traffic is stored in a file named wpa2capture.cap. To crack the key using Aircrack-ng, a wordlist is required. Kali Linux includes several wordlists, and one will be used for this example.
 
-aircrack-ng -w /usr/share/wordlists/rockyou.txt wifihacking/wpa2capture.cap
+`aircrack-ng -w /usr/share/wordlists/rockyou.txt wifihacking/wpa2capture.cap
 
 _-w_ specifies the dictionary file path
 
 > Note that if the password isn't in the dictionary file, Aircrack-ng cannot crack it and may display a message like "pass-phrase is not present in the dictionary." To mitigate such attacks, it's recommended to use strong passwords and WPA2 encryption. Additional countermeasures include enabling MAC address filtering and hiding the network SSID.
 
-What is the password obtained after cracking the WPA2 key?
+What is the password obtained after cracking the WPA2 key? **12345678**
+
