@@ -16,7 +16,6 @@ First, open a _new terminal_ and change the working directory to one containing 
 
 _Scapy_ is a powerful interactive network manipulation tool that, when used with the KillerBee toolkit, allows us to interact with and analyze ZigBee and IEEE 802.15.4 networks. In this lab, we'll use Scapy to perform tasks like packet crafting and analysis within a ZigBee network environment.
 `scapy
-
 ### Importing Capture File
 
 A sample capture file named control4-sample.pcap is present in the current directory, containing pre-captured traffic.
@@ -25,20 +24,16 @@ A sample capture file named control4-sample.pcap is present in the current direc
 To import a sample ZigBee capture file, issue the following commands:
 `inf = 'control4-sample.pcap'
 `packets = rdpcap(inf)
-
 ### Looking at Packets Summary
 
 With scapy, it's easy to examine ZigBee packets with various levels of detail.To see the summary of all captured packets, use the following command:
 `packets.display()
-
 ### Examining Single Packet
 
 To look closely at a single packet, we can use the following command (with the packet number in square brackets):
-
 `packets[0]
 
 We can also view the summary for a specific packet, by adding the _.summary()_ option:
-
 `packets[0].summary()
 
 
