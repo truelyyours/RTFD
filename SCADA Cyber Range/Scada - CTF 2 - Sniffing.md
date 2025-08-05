@@ -17,6 +17,27 @@ When prompted for the password, enter conpot:
 
 Lastly, to initiate Conpot, enter the following command:
 `/home/conpot/.local/bin/conpot --template default --logfile /var/log/conpot/conpot.log -f --temp_dir /tmp`
+# Identifying Protocols
 
+The role of the root user involves creating a directory owned by the root and closely overseeing network activity across all interfaces.
+Open a new terminal and enter the following command to log in as a root user:
+`sudo su`
+
+When prompted for the password, type:
+`passw0rd!`
+
+Commence the packet sniffing process to conduct a comprehensive analysis of network traffic.
+
+Navigate to the _files_ directory and use the following command:
+`cd files`
+`tshark -r capture1.pcap`
+
+### Enumerating Hosts
+
+Based on the results of the analysis, it has been determined that two SCADA devices are actively communicating within the network. The IP addresses of these devices are _192.168.6.133_ and _192.168.6.134_.
+
+---
+
+What specific ICS/SCADA protocol and associated port number are used to communicate within the captured network?
 
 
