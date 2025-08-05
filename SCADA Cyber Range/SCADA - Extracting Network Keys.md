@@ -35,5 +35,19 @@ To look closely at a single packet, we can use the following command (with the p
 
 We can also view the summary for a specific packet, by adding the _.summary()_ option:
 `packets[0].summary()
+# Extracting Network Key
 
+Data in ZigBee protocol is encrypted, however, if a device that does not have a stored symmetric key wants to join the network, the key is transmitted to this device in cleartext and may be captured and easily extracted.
+
+Exit _scapy_ by entering _enter()_.
+Run the following command to extract the network key for the capture file:
+`sudo wireshark control4-sample.pcap
+
+To apply a filter in Wireshark, use the following command:
+`zbee_nwk
+
+To analyze further, apply another filter using the following command:
+`zbee_aps
+
+Click on one of the packets, specifically the _Transport Key_, and in the _Command Frame_, you will find the key, which is reversed.
 
