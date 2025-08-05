@@ -50,4 +50,22 @@ To analyze further, apply another filter using the following command:
 `zbee_aps
 
 Click on one of the packets, specifically the _Transport Key_, and in the _Command Frame_, you will find the key, which is reversed.
+# Examining Zigbee Packet Layers
 
+_ZigBee Tools_ is another toolkit that was designed to expand the KillerBee functionality. It includes several Python scripts for interacting with different packet layers.
+
+_LAYER_identifier.py_ determines the different layers found in ZigBee packets and displays the summary. Let's run it on our capture file:
+`python2.7 /home/kali/LAYER_identifier.py -f control4-sample.pcap`
+#### Applying Network Key
+
+You can see that there are encrypted packets in the capture. To get more visibility into layers, we can apply the network key we extracted earlier. Re-issue the command with the -k option followed by the formatted key value:
+`python2.7 /home/kali/LAYER_identifier.py -f control4-sample.pcap -k 2f397d5171525d7b726a393b726b5426
+#### Extracting Network Key - KEY_identifier
+
+The _KEY_identifier.py_ script will also quickly extract the key:
+`python2.7 /home/kali/KEY_identifier.py -f control4-sample.pcap
+#### Extracting Network Key - zbdsniff
+
+Finally, zbdsniff (also part of the KillerBee suite) can also extract network keys and fromat them to be used with Wireshark.
+Run it on our capture file as follows:
+`python2.7 /home/kali/zbdsniff.py control4-sample.pcap
