@@ -63,4 +63,43 @@ To create a new rule, use the u32 match feature, which extracts 32 bits from a p
 Enter this command in the terminal:
 `sudo iptables -A INPUT -p tcp -s 192.168.1.101 --dport 502 ! -f -m u32 --u32 "0>>22&0x3c @12>>26&0x3c@ 7>>24&0xff=0x2b" -j DROP
 
+>Here’s an explanation of each part:
+>  - `-A INPUT`: Append this rule to the INPUT chain (it will check incoming packets).
+>- `-p tcp`: Match TCP protocol packets.
+>- `-s 192.168.1.101`: Match packets coming from source IP 192.168.1.101.
+>- `--dport 502`: Match packets destined to TCP port 502, typically used for Modbus protocol (an ICS/SCADA protocol).
+>- `! -f`: Match packets that are **not** fragments (the `-f` matches fragmented packets beyond the first fragment, so `! -f` means this is the first fragment or non-fragmented packet).
+>- `-m u32`: Use the "u32" match module, which allows matching based on specific bits or bytes at arbitrary locations within the packet payload.
+>- `--u32 "0>>22&0x3c @12>>26&0x3c@ 7>>24&0xff=0x2b"`: This is the key complex u32 expression. Breaking it down:
+    - `0>>22&0x3c`:  
+        The expression `0>>22` means right-shift 0 bits by 22 (effectively extracting bits), mask it with `0x3c` (binary mask). In u32 module syntax, the number before `>>` refers to the offset (byte position 0 in the packet).  
+        This expression calculates the IP header length—it extracts the lower nibble (4 bits) of the first byte of the IP header (byte 0), then multiplies by 4 (shift right 22 bits, mask 0x3c). The result is the size of the IP header in bytes.
+    - `@12>>26&0x3c@`:  
+        The `@` symbol means "jump" — it uses the IP header length from the prior expression to jump into the packet payload dynamically. Then at (IP header length + 12 bytes), it performs a right shift and mask again (similar operation) to go deeper.
+    - `7>>24&0xff=0x2b`:  
+        This checks byte 7 in the TCP header (right shifted 24 bits and masked with 0xff to extract a byte) and compares it to the value `0x2b` (which is decimal 43).
+
+>Putting it in more accessible terms:
+>- The rule dynamically calculates the IP header length.
+>- Using that, it jumps to TCP header data.
+>- It examines the 8th byte (offset 7) of the TCP header for the specific value `0x2b`.
+>- If the value does not match, and other conditions are met, it will DROP the packet.
+# Testing Rules - Allowed Traffic
+
+_PLCScan_ is a Python script released by SCADA. The script is used to scan the provided IP range for the open 102 and 502 TCP ports. Moreover, the script calls for other functions if the specified ports are found. PLCScan is already pre-installed. To use PLCScan, on the other terminal navigate to the /PLCScan/ directory:
+`cd PLCScan/
+
+Initially, examine whether the rule isn't discarding packets that should be permitted. Execute the command with the --brute-uid option, designed to send Read device ID requests to all identified devices:
+`python2 plcscan.py 192.168.1.100 --brute-uid
+
+### Testing Rules - Blocked Traffic
+
+On the Target machine, open a new terminal and navigate to the /PLCScan/ directory:
+`cd /home/PLCScan/
+
+Enter the following command to start scanning:
+`python2 plcscan.py 192.168.1.100 --brute-uid
+
+What output would be displayed in the terminal?
+
 
