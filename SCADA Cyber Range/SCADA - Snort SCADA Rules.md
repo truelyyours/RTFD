@@ -109,3 +109,29 @@ Then, enter _run_ to launch the scan.
 Metasploit successfully identifies the Modbus server.
 
 What is the unit ID displayed in the output? **1**
+# Examining Alerts
+
+To check if Snort has detected any activities, switch to _Terminal 1_ and press _Ctrl+Z_ to stop Snort.
+
+By default, Snort saves alerts to the _/var/log/snort/alert_ file. To view the alert file, run:
+
+sudo cat /var/log/snort/alert
+
+The Unauthorized Read Request rule has been triggered, and Snort provides detailed information, including the timestamp, alert message, classification, priority, source/destination IPs and ports, TCP flags, and more about the packet that caused the alert.
+
+### Examining Packets
+
+Switch to _terminal 3_ and press _Ctrl+C_ to stop TShark.
+
+Once again, use tshark to analyze captured network traffic from the/tmp/cap file and then pipes the output to more to start viewing from the line containing Modbus.
+
+sudo tshark -r /tmp/cap -V -x | more +/Modbus
+
+The _-r_ option specifies the input file for captured packets, the _-V_ (verbose) option shows packet details, and the _-x_ option displays packet data in hex format.
+
+The output shows the presence of "00 00" content, and then, towards the end, there is the "04" value representing the Modbus Function Code 04. As a result, it becomes apparent that the modbusdetect module utilizes this specific request type to identify Modbus servers.
+
+Hit the _q_ key to exit and return to the command prompt.
+
+What does Modbus Function Code 04 mean?
+**Read Input Register**
