@@ -20,3 +20,92 @@ To replay traffic from the _modbus_test_data_part1.pcap_ PCAP file to the loopba
 
 The traffic was quickly replayed in under a second, and the output confirmed the successful transmission of packets.
 
+What utility is used to resend traffic from the capture files? **tcpreplay**
+# Alerts displayed
+
+Switch back to _terminal 1_, where several alerts are displayed.
+
+Snort has detected various types of suspicious activities, such as unauthorized write and read requests, along with potential denial of service (DOS) attacks.
+
+Next, we will examine the actual rules and try to understand how they work, considering that Snort rules files are text files.
+
+Press _Ctrl+Z_ to stop Snort and return to the command prompt.
+### Looking at Rules
+
+Run the following command to read the Quickdraw rules file and use _more_ command to jump directly to rules related to Modbus PLC protocol:
+`cat /etc/snort/rules/all-quickdraw.rules | more +/MODBUS
+
+At this point, let's explore the explanation of the following rule:
+> Unauthorized Read Request to a PLC
+
+The rule begins with the Rule Action, which in this case is _alert_. Snort can perform several actions, including log (to log matching packets) and drop (to block packets for active defense).
+
+Next is the protocol (tcp), followed by the source of the packet. Since all traffic comes from/to the same machine, we modified the original rule, which had !$MODBUS_CLIENT* to exclude a specific IP. In our configuration, we replaced it with any any, meaning the rule applies to traffic from any source. The targeted traffic goes to the Modbus server on port 502.
+
+The section in parentheses includes Rule Options. The flow option checks for client-to-server traffic in established sessions. The content option looks for "00 00" in packet data, with offset specifying where to start and depth telling Snort how far to scan. This helps detect zero values for the Protocol Identifier. To refine this, the pcre option is used, allowing Snort to search for patterns in packet data. Specifically, it looks for any 3 characters `([\S\s]{3})` followed by values separated by pipe (|), which represent Modbus Function Codes for various read requests. Together, content and pcre narrow the match to only Modbus read requests.
+
+Next, we'll simulate an attack to trigger this rule.
+Press _enter_ to navigate through the output or press _q_ to exit and return to the command prompt.
+# Logging Snort Alerts
+
+Logging Snort alerts refers to recording and storing information about potential security events detected by Snort.
+
+To restart Snort and direct detailed alerts to a file instead of displaying them on the console, use the following command:
+`sudo snort -A full -i lo -k none -c /etc/snort/snort.conf1
+
+The _-k_ none option disables packet checksum verification, which is necessary for locally generated traffic.
+### Starting Modbus Server
+
+A _Modbus slave_ is a device that responds to Modbus master commands and requests using an address for identification and communication. A Modbus slave contains registers, which can be read or written by the Modbus master based on the communication setup.
+
+Diagslave is a free, open-source Modbus slave simulator and diagnostic tool used to simulate Modbus slaves, test the Modbus master device, troubleshoot, and provide detailed communication settings.
+
+Switch to _second terminal_, and change the working directory to the location of the Modbus slave device simulator:
+`cd /modbus/diagslave/x86_64-linux-gnu
+
+Utilize the following command to employ the diagslave tool to initiate a Modbus slave device simulator:
+`sudo ./diagslave -m tcp
+
+The _-m_ option specifies the Modbus protocol to use for communication.
+
+What tool is used to simulate a Modbus slave for testing and troubleshooting?
+**diagslave**
+### Starting TShark
+
+Let's begin capturing traffic for a more detailed examination of the packets.
+
+TShark is the command-line version of Wireshark, a widely used open-source protocol analyzer and packet capture tool. It allows capturing and analyzing network traffic directly from the command line, without a GUI.
+
+Now, let's start sniffing network traffic on port 502, the default Modbus communications port.
+
+Open a _new terminal_ and use TShark to capture TCP traffic on port 502 and save it to the /tmp/cap file:
+`sudo tshark -i lo -w /tmp/cap port 502
+# Starting Metasploit Framework
+
+> To recap: Snort is running on Terminal 1, a Modbus server on Terminal 2, and TShark is capturing traffic on Terminal 3.
+
+_MSFconsole_ is the command-line interface for the Metasploit Framework, an open-source security toolset for penetration testing and vulnerability assessment. It provides a collection of modules and libraries to test system and application security.
+
+Open a _new terminal_ and start Metasploit with the following command:
+`msfconsole -L
+
+When prompted to set up a new database, type _no_.
+### Selecting Module
+
+Generate suspicious traffic using the Metasploit modbusdetect auxiliary module.
+
+First, select the modbusdetect module:
+`use auxiliary/scanner/scada/modbusdetect
+
+To display the module options, run:
+`options
+
+The output shows five required options for the scan, with the RHOSTS option unconfigured.
+
+Configure the module by setting the RHOSTS option to the 192.168.1.102 for a local environment scan:
+`set RHOSTS 192.168.1.102
+
+Then, enter _run_ to launch the scan.
+Metasploit successfully identifies the Modbus server.
+
+What is the unit ID displayed in the output? **1**
