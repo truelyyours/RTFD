@@ -41,5 +41,7 @@ Based on the results of the analysis, it has been determined that two SCADA devi
 What specific ICS/SCADA protocol and associated port number are used to communicate within the captured network?
  **Modbus on port 502**
 
-NNOTE: The portal d
+NOTE: The portal does not accpet this answer, idk what the format is. SO this remains incomplete!
+
+
 
