@@ -77,5 +77,28 @@ To initiate the scanning process, execute the exploit command:
 `exploit
 
 While encountering errors during this process is possible, it will become apparent that the scanner successfully gathers the list of supported function codes-data provided by Conpot. It is advisable to refrain from exiting the Smod shell at this stage, as it will be needed for the following steps.
-
+![[Pasted image 20250805201850.png]]
 Which Modbus function code is used to write a single coil?
+**function code 5**
+# Reviewing Conpot log file
+
+Navigate back to the Target machine. Open a _new terminal_ and access the log file by using the following command:
+`cat /var/log/conpot/conpot.log
+
+You will notice that the log contains detailed information about the attempted attacks. This data is valuable and can be used to enhance the host security by identifying patterns, attack techniques, and potential vulnerabilities.
+### Firewall Rule activation
+
+In light of the actions detected from the Kali Student machine, which included uploading unauthorized shellcode and conducting reconnaissance on the honeypot, preemptive action is required.
+
+To block the IP address of the Kali Student machine, use the _iptables_ utility to block incoming TCP packets from that machine.
+`sudo iptables -A INPUT -p tcp --dport 5020 -s 192.168.1.100 -j DROP
+
+Which command is used to check if the iptables rule was added successfully?
+**sudo iptables -L**
+# Attack Re-launch
+
+Navigate back to the Kali Student machine running the smod scanner, and reattempt to run the exploit command:
+`exploit
+After making another attempt to scan using the exploit command in the terminal of the Student machine, no response is received, signifying that the firewall is successfully blocking the request packets.
+
+Additionally, the information gathered from Conpot can be used to create rules for _IDS/IPS_.
