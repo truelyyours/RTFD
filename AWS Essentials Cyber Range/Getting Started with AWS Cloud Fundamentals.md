@@ -73,3 +73,92 @@ In this task, you will create a security group.
 7.  In Type, select **HTTP**, in Source, select **Anywhere-IPv4**, and then in the lower-right corner of the page, select **Create security group**.
 
 > Security groups are stateful. If a request is sent from an instance, the response traffic for that request is allowed to flow in regardless of inbound security group rules. A response to allowed inbound traffic is allowed to flow out, regardless of outbound rules.
+# Configure an Amazon S3 bucket
+
+In this exercise, you will configure an Amazon Simple Storage Service (Amazon S3) bucket that can withstand a region failure. First, you will create a set of S3 buckets in different regions. Next, you will enable cross-region replication (CRR) for the bucket. Finally, you will configure public access for the bucket.
+
+An [Amazon S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html "Using a bucket") is an object-based storage repository. The files are accessible from the internet by using a traditional HTML URL string. Objects have a maximum size of 5 TB each with no limit on total storage
+## Create an Amazon S3 bucket
+
+In this task, you will create two Amazon S3 buckets in different regions.
+
+1.  On the AWS Console Home page, select the hamburger menu in the upper left-hand corner, and then select **All services**.
+    ![update1.jpg](https://labondemand.blob.core.windows.net/content/lab185444/instructions207730/update1.jpg)
+
+2.  In All services, in Services by category, in Storage, select **S3**.
+    ![update2.jpg](https://labondemand.blob.core.windows.net/content/lab185444/instructions207730/update2.jpg)
+
+3.  On the S3 Homepage, select **Create bucket**.
+
+4.  In AWS Region, ensure that **US East (Ohio)** is selected.
+
+5.  In Bucket name, enter bucket-53639020-ohio.
+> The bucket name must be globally unique.
+
+6.  In Object Ownership, select **ACLs enabled**.
+
+> Ensure that **ACLs enabled** is selected or you will not be able to make objects public in a future task.
+
+7.  Review the default settings, and then select **Create bucket** to create the bucket.
+
+    > You should now be able to see your bucket listed.
+
+8.  In AWS Region, select **US West (Oregon)**.
+
+9.  Select **Create bucket** to create a second bucket.
+
+> Ensure that **US West (Oregon)** is selected. Both buckets must be in different regions to enable cross-region replication in the next task.
+
+10.  In Bucket name, enter bucket-53639020-oregon.
+
+11.  Review the default settings, and then select **Create bucket** to create the bucket.
+# Enable cross-region replication
+
+In this task, you will enable cross-region replication (CRR) for an S3 bucket.
+
+1.  In the S3 Management Console, select **bucket-53639020-ohio**.
+
+2.  On the Properties tab, in Bucket Versioning, select **Edit**.
+
+3.  In Bucket Versioning, select **Enable**, and then select **Save changes**.
+
+4.  On the Management tab, in Replication rules, select **Create replication rule**.
+
+> You can use [CRR](https://docs.aws.amazon.com/AmazonS3/latest/dev/replication.html#replication-requirements "Types of object replication") to replicate your Amazon S3 objects to another AWS region anywhere in the world. Amazon S3 buckets are already highly durable and highly available in a single region. However, you may need even higher levels of durability or availability with data stored in another region. This allows users who are closer to a given region to access the data with lower latency.
+
+5.  In Replication rule name, enter EastWest.
+
+6.  In Source bucket, ensure that the Source bucket name is **bucket-53639020-ohio**.
+
+7.  In Source bucket, in Choose a rule scope, select **Apply to all objects in the bucket**.
+
+8.  In the Destination, ensure that **Choose a bucket in this account** is selected, and then in Bucket name, enter bucket-53639020-oregon.
+    
+    ![Destination Bucket selection](https://labondemand.blob.core.windows.net/content/lab185444/l50i6k4r.jpg)
+
+9.  When prompted, select **Enable bucket versioning** to enable versioning in the destination bucket.
+
+10.  In the IAM role drop-down list, select **Choose from existing IAM roles**, and then select S3Replication Role-53639020.
+
+11.  Review the replication rule, and then select **Save**. When prompted to Replicate existing objects, select **No, do not replicate existing objects**, and then select **Submit**.
+
+12.  In the upper-left corner, select **Amazon S3** to return to the S3 Management Console page.
+
+13.  Review the list of **General purpose buckets**. 
+
+14.  Select **bucket-53639020-ohio**.
+
+15.  On your local computer, create a new document named welcome.txt.
+
+16.  At the beginning of the file, enter Welcome to the Lab Bucket!, and then save the file.
+
+17.  On the Objects tab, select **Upload**, and then select **Add fi020-oregon** bucket.
+
+18.  Ensure that the bucket contains the **welcome.txt** file.
+
+> `You may need to refresh the bucket contents to see the file, the replication should take less than one minute.
+
+19.  Open [image.jpg](https://raw.githubusercontent.com/LODSContent/ChallengeLabs_ArmResources/master/Labs/CCP-000/image.jpg "image.jpg"), and then save it on your local computer.
+
+20.  Switch to the **bucket-53639020-ohio** bucket, and then upload the **image.jpg** file.
+
