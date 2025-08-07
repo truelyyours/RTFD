@@ -161,4 +161,67 @@ In this task, you will enable cross-region replication (CRR) for an S3 bucket.
 19.  Open [image.jpg](https://raw.githubusercontent.com/LODSContent/ChallengeLabs_ArmResources/master/Labs/CCP-000/image.jpg "image.jpg"), and then save it on your local computer.
 
 20.  Switch to the **bucket-53639020-ohio** bucket, and then upload the **image.jpg** file.
+# Configure public access for an S3 bucket
 
+In this task, you will configure public access to an S3 bucket for static web site assets.
+
+1.  In the S3 Management Console, select **bucket-53639020-ohio**.
+
+2.  On the Permissions tab, in Block public access (bucket settings), select **Edit**.
+
+3.  Clear the **Block all public access** check box.
+
+> In most cases, S3 buckets should be secured to the point where only select authorized individuals should be allowed access. In some scenarios, you may need to allow public read access when the bucket is being used as a source for publicly accessible website content.
+
+4.  Select **Save changes**, enter confirm, and then select **Confirm**.
+
+> The extra confirmation is there as a safeguard against accidental information exposure. You are allowing public access for this bucket since it will be storing static assets for a website.
+
+5.  On the Objects tab, select both files in the bucket.
+
+6.  Select **Actions**, select **Make public using ACL**, and then on the Make public page, select **Make public**.
+
+> Ensure you are configuring public access using ACL in the **bucket-53639020-ohio** bucket. bucket-53639020-oregon was not created with ACLs enabled, and will not allow public access through this method.
+# Configure security for a bucket
+
+In this exercise, you will configure security for a bucket. First, you will create an **(Identity and Access Management) IAM** policy that will provide access to the S3 bucket for uploads. Next, you will create a user, and then you will create a permission boundary for the user. Finally, you will create a group, and then you will apply the IAM policy to the group.
+## Create a policy
+
+In this task, you will create an IAM policy for the S3 bucket.
+
+1.  In the AWS Management Console, in Search for services, search for and select IAM.
+
+2.  In the navigation pane, in Access management, select **Policies**, and then select **Create policy**.
+
+3.  In Service, select **Choose a service**, and then search for and select **S3**.
+
+4.  Select **All S3 actions**, expand **Resources**, and then in bucket, select **Add ARN**.
+
+![The list of resources](https://labondemand.blob.core.windows.net/content/lab185444/4yv0cjlu.jpg)
+
+5.  In Bucket name, enter bucket-53639020-ohio, and then select **Add ARNs**.
+
+6.  In the lower-right corner of the page select **Next**.
+
+7.  On the Review and create page, in Policy name, enter s3webadminpolicy, and then select **Create policy**.
+# Create a user
+
+In this task, you will create a new user, and then you will set a permission boundary for the user.
+
+1.  In the navigation pane, in Access Management, select **Users**, and then select **Create user**.
+
+2.  In User name, enter webadmin, and then select the **Provide user access to the AWS Management Console access - optional** check box. ![passwordaccess.jpg](https://labondemand.blob.core.windows.net/content/lab185444/instructions290561/passwordaccess.jpg)
+
+3.  In Console password, select **Custom password**, and then enter LabPassw0rd!.
+
+4.  Clear the **Users must create a new password at next sign-in - recommended** check box, and then select **Next**.
+
+5.  On the Set permissions page, expand **Set permissions boundary**, and then select **Use a permissions boundary to control the maximum permissions**.
+
+6.  In Permissions policies, enter Lab in the search box, select the **LabSecureAccess** radio button, and then select **Next**.
+
+    ![The LabSecureAccess policy](https://labondemand.blob.core.windows.net/content/lab185444/osl9c16b.jpg)
+
+> Some users in the organization may need permissions to upload files to the S3 bucket, but do not need the privileges to do anything else.
+
+7.  Review the configuration, and then select **Create user**.
