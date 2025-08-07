@@ -52,3 +52,24 @@ In this task, you will create a network ACL.
 16.  Select all of the available subnets, and then select **Save changes** to complete the subnet association.
 
 >  `You must create an outbound rule on a network ACL since network ACLs are stateless. This means that incoming traffic is not automatically allowed to be responded to.
+## Create a security group
+
+In this task, you will create a security group.
+
+1.  In the VPC Management Console, in the navigation pane, in Security, select **Security Groups**.
+
+2.  Select **Create security group**.
+
+3.  In Security group name, enter WebSG.
+
+4.  In Description, enter Security group for HTTP access.
+
+5.  In VPC, ensure that **Lab VPC A** is selected.
+
+6.  In Inbound rules, select **Add rule**.
+
+> A security group acts as a *virtual firewall* for your instance to control inbound and outbound traffic.
+
+7.  In Type, select **HTTP**, in Source, select **Anywhere-IPv4**, and then in the lower-right corner of the page, select **Create security group**.
+
+> Security groups are stateful. If a request is sent from an instance, the response traffic for that request is allowed to flow in regardless of inbound security group rules. A response to allowed inbound traffic is allowed to flow out, regardless of outbound rules.
