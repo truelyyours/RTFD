@@ -34,4 +34,66 @@ PORT     STATE SERVICE VERSION
 |_  256 12:65:1b:61:cf:4d:e5:75:fe:f4:e8:d4:6e:10:2a:f6 (ED25519)
 
 ```
--- How to enumerate Anonymous FTP
+TODO: -- How to enumerate Anonymous FTP
+
+First step for HTTP service is to open in browser and do a directory traversal. The site is just tha landing page of apache server!
+![[Pasted image 20250807211833.png]]
+However, `gobuster` yields interesting results:
+```
+┌──(truelyyours㉿kali)-[~/tryhackme/SimpleCTF]
+└─$ gobuster dir -w /usr/share/wordlists/seclists/Discovery/Web-Content/big.txt -u http://10.201.28.2 -e 
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.201.28.2
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/seclists/Discovery/Web-Content/big.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Expanded:                true
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+http://10.201.28.2/.htpasswd            (Status: 403) [Size: 295]
+http://10.201.28.2/.htaccess            (Status: 403) [Size: 295]
+Progress: 1417 / 20479 (6.92%)[ERROR] Get "http://10.201.28.2/_sitemap": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+[ERROR] Get "http://10.201.28.2/_styles": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+http://10.201.28.2/robots.txt           (Status: 200) [Size: 929]
+http://10.201.28.2/server-status        (Status: 403) [Size: 299]
+http://10.201.28.2/simple               (Status: 301) [Size: 311] [--> http://10.201.28.2/simple/]
+Progress: 20478 / 20479 (100.00%)
+===============================================================
+Finished
+===============================================================
+```
+
+I see a `/simple` endpoint that can be accessed. It is a "CMS Made Simple" home page. At the bottom of the page I can see the version `2.2.8`. So, I reach for it using `searchsploit`.
+```shell                              
+┌──(truelyyours㉿kali)-[~/tryhackme/SimpleCTF]
+└─$ searchsploit cms 2.2.8                                                                              
+---------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                |  Path
+---------------------------------------------------------------------------------------------- ---------------------------------
+Bolt CMS < 3.6.2 - Cross-Site Scripting                                                       | php/webapps/46014.txt
+CMS Made Simple < 2.2.10 - SQL Injection                                                      | php/webapps/46635.py
+Composr-CMS Version <=10.0.39 - Authenticated Remote Code Execution                           | php/webapps/51060.txt
+Concrete CMS < 5.5.21 - Multiple Vulnerabilities                                              | php/webapps/37225.pl
+Concrete5 CMS < 5.4.2.1 - Multiple Vulnerabilities                                            | php/webapps/17925.txt
+Concrete5 CMS < 8.3.0 - Username / Comments Enumeration                                       | php/webapps/44194.py
+DeDeCMS < 5.7-sp1 - Remote File Inclusion                                                     | php/webapps/37423.txt
+Drake CMS < 0.2.3 ALPHA rev.916 - Remote File Inclusion                                       | php/webapps/2713.txt
+Kirby CMS < 2.5.7 - Cross-Site Scripting                                                      | php/webapps/43140.txt
+Monstra CMS < 3.0.4 - Cross-Site Scripting (1)                                                | php/webapps/44855.py
+Monstra CMS < 3.0.4 - Cross-Site Scripting (2)                                                | php/webapps/44646.txt
+Mura CMS < 6.2 - Server-Side Request Forgery / XML External Entity Injection                  | cfm/webapps/43045.txt
+Redaxo CMS Mediapool Addon < 5.5.1 - Arbitrary File Upload                                    | php/webapps/44891.txt
+zKup CMS 2.0 < 2.3 - Arbitrary File Upload                                                    | php/webapps/5220.php
+zKup CMS 2.0 < 2.3 - Remote Add Admin                                                         | php/webapps/5219.php
+---------------------------------------------------------------------------------------------- ---------------------------------
+Shellcodes: No Results
+```
+
+There is `CMS Made Simple < 2.2.10 - SQL Injection` . Submitting the CVE (**CVE-2019-9053**) for this in the TryHackMe shell, it give a green flag  so its-a-go! 
