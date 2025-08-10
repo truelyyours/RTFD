@@ -97,3 +97,5 @@ Shellcodes: No Results
 ```
 
 There is `CMS Made Simple < 2.2.10 - SQL Injection` . Submitting the CVE (**CVE-2019-9053**) for this in the TryHackMe shell, it give a green flag  so its-a-go! 
+
+TODO: THM's 1h free expired so now, gotta try this tomm!
