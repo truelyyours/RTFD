@@ -1,3 +1,5 @@
+## Init
+
 The ip I am assigned is `10.10.11.80`. I do a `nmap` scan and find some ports open.
 ```                                      
 ┌──(truelyyours㉿kali)-[~/tryhackme/SimpleCTF]
@@ -47,4 +49,9 @@ HOP RTT      ADDRESS
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 13.92 seconds
 ```
-It looks like an HTTP service running on port 80 and an xwiki on port 8080.
+It looks like an HTTP service running on port 80 and an xwiki on port 8080. Here we can access some posts by a user named `Neal Bagwell` and we can access the user's page as well `http://10.10.11.80:8080/xwiki/bin/view/XWiki/neal`. Of course usually port 80 is open but we have Xwiki on port 8080 so I lookup for any CVEs on Xwiki. And we have [**CVE-2025-24893**](https://www.offsec.com/blog/cve-2025-24893/)!
+
+## CVE Exploit
+
+
+
