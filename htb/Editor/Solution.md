@@ -52,6 +52,9 @@ Nmap done: 1 IP address (1 host up) scanned in 13.92 seconds
 It looks like an HTTP service running on port 80 and an xwiki on port 8080. Here we can access some posts by a user named `Neal Bagwell` and we can access the user's page as well `http://10.10.11.80:8080/xwiki/bin/view/XWiki/neal`. Of course usually port 80 is open but we have Xwiki on port 8080 so I lookup for any CVEs on Xwiki. And we have [**CVE-2025-24893**](https://www.offsec.com/blog/cve-2025-24893/)!
 
 ## CVE Exploit
+There does not exist any working Metasploit module yet, but we have [this GitHub link](https://github.com/gunzf0x/CVE-2025-24893/blob/main/CVE-2024-24893.py) that implements the exploit to achieve remote RCE. We can use this to spawn a shell locally and navigate the target system. 
+![[Pasted image 20250810030501.png]]
+
 
 
 
