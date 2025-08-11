@@ -77,7 +77,28 @@ Instead I noticed that within `/home` there is folder for username `oliver`. So,
 So, I try to login to `oliver` via `ssh` and success! Now we can get the user flag.
 ## Linear Privilege Escalation
 
-User **oliver** does not have any sudo perimissions. So I explore the system a little bit. Interesting findings for the ports u see.
-``
+User **oliver** does not have any `sudo` permissions. So I explore the system a little bit. Interesting findings for the ports u see.
+```
+oliver@editor:~$ netstat -ntul
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:32839         0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:33060         0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:19999         0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:8125          0.0.0.0:*               LISTEN     
+tcp6       0      0 :::80                   :::*                    LISTEN     
+tcp6       0      0 :::22                   :::*                    LISTEN     
+tcp6       0      0 :::8080                 :::*                    LISTEN     
+tcp6       0      0 127.0.0.1:8079          :::*                    LISTEN     
+udp        0      0 127.0.0.1:8125          0.0.0.0:*                          
+udp        0      0 127.0.0.53:53           0.0.0.0:*                        
+```
 
+There are SQL servers, and `java` and `netdata` services exposed via certain ports. 
+To view the NetData dhasboard, I connect to it via `ssh` tunnel - `ssh -L 19999:127.0.0.1:19999 oliver@10.10.11.80` from my local machine. Then I can open the dashboard on my browser.
+For these pentesting, we usually lookup the version and check if any CVE is present or not. So, I do the same and find **CVE-2024-3201**. [This GitHub](https://github.com/AliElKhatteb/CVE-2024-32019-POC) link provides with sample exploit.
 
