@@ -138,4 +138,37 @@ Use the send() method to send the request to the server.
 ![[Screenshot 2025-02-19 at 10.06.00-1 1.png]]
 
 Save the changes and close the editor.
+# Capture request in Burp
 
+Make sure that the Python server is running on port 1337 on directory ~/evilscripts.
+
+Next, open a new tab and load the previously created evil page just created by typing the following command:
+
+localhost:1337/evil-cors.html
+
+Afterwards, return to BurpSuite and view the captured traffic in HTTP History tab.
+
+The intercepted request shows that the "Origin" header has been appended to the request from source "http://localhost:1337".
+![[v0iq16c6.jpg]]
+# JSON Web Tokens
+
+JSON Web Token (JWT) is an open standard utilized to generate and use bearer tokens for authentication between two parties. The JWT token is an encoded form of data issued by the sender application and is used to authenticate the client's access. The JWT token structure is similar to that of a web request and consists of three parts separated by dots (.)
+
+- Header
+- Payload
+- Signature
+
+Therefore, a JWT typically looks like the following: xxxxx.yyyyy.zzzzz
+
+The header is Base64Url encoded and contains the type of token and the hashing algorithms used, typically HMAC SHA256 or RSA. The payload contains the claims, which are statements about the entity, typically a user, and any additional data.
+
+The signature is the final part of the JWT structure. It takes the header and the payload, adds a secret to the hashing algorithm, and spits out a hash corresponding to the unaltered data in the rest of the JWT. Using the signature, the client app and the server can verify that the token they are receiving is the original, unaltered token.
+# Authentication
+
+One example of a web application using JWT authentication can be found:
+
+`jwt.com:5001
+
+Now, the client application can obtain an access token to access protected resources in subsequent HTTP requests. Once the client application receives the access token (JWT token) from the server, the token can be persisted into the local storage of client applications.
+
+To view the token right-click and go to Inspect Element. A window will appear at the bottom of the page. Select the Storage tab, then expand Local Storage. Whenever HTTP requests are sent to access the protected resources of the API server, the tokens stored in the Local Storage are checked.
