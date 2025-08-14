@@ -97,13 +97,43 @@ The following CORS headers are the most used:
 ### Login using default credentials
 
 Go back to the browser and visit demo.com:5000.
+`demo.com:5000
 
-demo.com:5000
+Secondly, click on the CORS link. The student is presented with a login page. Type the following default credentials (username: `admin`, password: `admin`) to continue.
+# Modify the Response Header
 
-> If you encounter any issues, try visiting http://192.168.1.100:5000.
-> 
->   
+After successfully logging in, return to Burp Suite to view the intercepted traffic from the application. Go to the "Proxy" > "HTTP history" tab. The tab displays records of all requests that have passed through the Proxy. Secondly, click on the last transmitted request containing the "`/confidential`" URL. Burp Suite will show the relevant messages for the selected request.
+![[lh0h41c7.jpg]]
 
-Secondly, click on the CORS link. The student is presented with a login page. Type the following default credentials (username: admin, password: admin) to continue.
+The selected request shows that the application has CORS enabled and has set a wildcard for the `Access-Control-Allow-Origin` response header, indicating that any origin can access the resource.
 
-admin
+Right-click on the request and choose `Send to Repeater` from the context menu. **Repeater** is a tool used to manually manipulate and reissue HTTP requests and analyze the application's responses. Now, visit the Repeater tab and add an "Origin" request header with the "
+evilwebsite.xyz" value below the session cookie. Afterwards, click the Send button.
+`Origin: evilwebsite.xyz`
+
+The user will find out that the value from the added Origin header is dynamically allocated to the "Access-Control-Allow-Origin" header.
+![[ms3sk36n.jpg]]
+# Create a malicious Javascript code
+
+An html file named `evil-cors.html` is saved in the machine. The challenge is to add a few lines of code for performing a malicious `XMLHttpRequest` GET request. **XHR (XMLHttpRequest)** objects are used to retrieve data from a URL without doing a full page refresh. To get started, open a new tab in terminal and edit the file `evil-cors.html` located in `~/evilscripts`.
+
+The student must perform an `XMLHttpRequest GET request` from the malicious domain to obtain sensitive information. Therefore, to send an HTTP request, create an `XMLHttpRequest object` named `req`. Insert the following lines of code inside the element.
+`<script>
+	`var req = new XMLHttpRequest();`
+
+Set the `req.onload` listener function to get the response from the server and populate the result afterwards.
+
+    `req.onload = reqListener;`
+
+Call the open function to start the request. The first argument is the HTTP request method, which in this case is `GET`. The second argument is the URL or relative path to the server-side resource. The third argument is for assessing whether the HTTP request occurs asynchronously. Set it to true since it is not needed to hold up other parts of JavaScript code from loading.
+
+    `req.open('get','http://demo.com:5000/confidential', true);`
+
+Use the send() method to send the request to the server.
+
+    `req.withCredentials = true;     req.send();     function reqListener(){         document.getElementById("cors").innerHTML= req.responseText; } </script>`
+
+![[Screenshot 2025-02-19 at 10.06.00-1 1.png]]
+
+Save the changes and close the editor.
+
