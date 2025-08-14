@@ -88,11 +88,11 @@ CORS operates by adding a new HTTP header that allows the webserver to speak up 
 
 The following CORS headers are the most used:
 
--Access-Control-Allow-Origin: This header is a response header, indicating that as soon as a request is made to the server for exchanging data, the server responds with a header informing the browser whether the request's origin is listed inside the value of the response. If the header is not present or the response header does not contain the request origin inside the header, the request is dropped, and a security error is raised; otherwise, the request is processed.
+`-Access-Control-Allow-Origin`: This header is a response header, indicating that as soon as a request is made to the server for exchanging data, the server responds with a header informing the browser whether the request's origin is listed inside the value of the response. If the header is not present or the response header does not contain the request origin inside the header, the request is dropped, and a security error is raised; otherwise, the request is processed.
 
--Access-Control-Allow-Methods: This is another response header; the server responds with this header and instructs the browser to check for allowed HTTP methods mentioned inside of it. If the server only allows GET and a POST request is initiated, it will be dropped if not mentioned in this list.
+`-Access-Control-Allow-Methods`: This is another response header; the server responds with this header and instructs the browser to check for allowed HTTP methods mentioned inside of it. If the server only allows GET and a POST request is initiated, it will be dropped if not mentioned in this list.
 
--Origin: This request header tells the server from which domain origin the request was attempted. The origin header is always sent alongside cross-domain requests.\
+`-Origin`: This request header tells the server from which domain origin the request was attempted. The origin header is always sent alongside cross-domain requests.
 
 ### Login using default credentials
 
