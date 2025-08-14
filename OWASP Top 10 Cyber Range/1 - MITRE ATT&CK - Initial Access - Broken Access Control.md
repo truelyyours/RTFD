@@ -194,4 +194,12 @@ with open('rockyou.txt') as secrets:
         except jwt.ExpiredSignatureError:
             print('Token Expired ....[' + secret.rstrip() + ']')
 ```
+# Run the python script
 
+Run the newly created script with Python.
+
+`python3 weak-secret.py
+
+Pass to it as an input the value of the auth token generated when the user is logged in to the web application founded in Storage in Inspect Element.
+
+After a few seconds, the script brute-forces successfully the secret used to sign the token.
