@@ -24,4 +24,48 @@ Burp Suite is a tool that comes in helpful when attacking websites and web appli
 Go to the "Proxy" > "Intercept" tab and make sure that the interception action is on.
 
 To configure Firefox for testing with Burp, go to the Firefox Menu and select Preferences.
-Click on 'Manual proxy configuration'. Afterwards, set the IP address to `127.0.0.1` and the Burp Proxy listener port to `8080`. To finish, click OK to close all of the options dialogs.
+Click on 'Manual proxy configuration'. Afterwards, set the IP address to `127.0.0.1` and the Burp Proxy listener port to `8080`. To finish, click `OK` to close all of the options dialogs.
+# Changing color
+
+When logging into the application, the student is presented with a page that has an input field asking to enter the favorite color. Make sure that the interception action is on prior to submitting.
+Any value submitted will be stored in the session of the user. Type blue and click on the Submit button. The request details will be captured and shown in BurpSuite.
+### Capture request in Burp
+
+The captured request via Burp Suite shows that the application is performing a `POST` request, storing the typed favorite color into the user's session and displaying this back to the user on the HTML website.
+![[Pasted image 20250813211521.png]]
+
+The POST request is **not** sending any unique token; therefore, the attacker can suppose that this web application is not using any form of protection against CSRF.
+
+Click on the "Forward" button to send the request to the server.
+
+To perform a CSRF attack, all that's needed is for a user to have an active session on a given site and *an attacker crafty enough to trick a user into clicking on a link or a page that performs actions on the said side*. Hence the term's name: "Cross-Site", because the request does not come from the original site, and "Request Forgery" because it's a forged request by an attacker.
+# Create a malicious page
+
+An html file named evil-csrf.html is stored in the machine. This html file is a clone of the `demo.com:5000/update` page. The challenge is to **add a few lines of code** to the file to perform the malicious CSRF POST request. This will be achieved by adding a hidden `iFrame` that sends a request to the original site on behalf of the logged-in user. This request will change the value of the favorite color to 'Hacked'.
+
+To do so, open the terminal, change the directory to `/home/kali/evilscripts`, and open the file using nano as an editor.
+`cd /home/kali/evilscripts
+`nano evil-csrf.html
+
+The attacker adds a hidden `iFrame` using the `display:none` attribute and sends the form's response there. As a result, the victim does not see nor realize what has happened. Add the following lines of code at the end of the file.
+
+`<iframe style="display:none" name="csrf-frame"></iframe>`
+
+Since the attacker does not want the victim to see the form, the input element is given the type hidden, thus making it invisible on the web page that the victim sees.
+
+```
+<form method='POST' action='http://demo.com:5000/update' target="csrf-frame" id="csrf-form">
+	<input type='hidden' name='color' value='Hacked!'>
+	<input type='submit' value='submit'>
+</form>
+```
+
+As the final step, the attacker includes some JavaScript inside a script tag to automatically submit the form when the page is loaded. JavaScript calls the getElementByID() method on the HTML document with the ID of the form ("csrf-form") that the attacker set in the second line as an argument.
+
+TypeCopy
+
+`<script>document.getElementById("csrf-form").submit()</script>`
+
+Once the form is submitted, the browser passes the victim's cookies to the original website through the HTTP POST request, making it seem as if the victim purposely changed the color to 'Hacked'.
+
+Lastly, click on the Save button to save the changes made.
