@@ -131,7 +131,9 @@ Call the open function to start the request. The first argument is the HTTP requ
 
 Use the send() method to send the request to the server.
 
-    `req.withCredentials = true;     req.send();     function reqListener(){         document.getElementById("cors").innerHTML= req.responseText; } </script>`
+    `req.withCredentials = true;
+    req.send(); 
+    function reqListener(){ document.getElementById("cors").innerHTML= req.responseText; } </script>`
 
 ![[Screenshot 2025-02-19 at 10.06.00-1 1.png]]
 
