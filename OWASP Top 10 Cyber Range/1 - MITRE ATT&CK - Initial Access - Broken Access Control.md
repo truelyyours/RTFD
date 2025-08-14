@@ -80,3 +80,30 @@ Next, open a new tab and load the evil page previously created by typing the fol
 `localhost:1337/evil-csrf.html
 
 The command will now send a POST request to the application and change the color value to the new value 'Hacked!'.
+# Introduction to CORS
+
+CORS allows cross-domain HTTP data exchange, indicating that a page running at `origin A` can send/receive data from a server at `origin B`. CORS is thoroughly used in web applications where web fonts, CSS, documents, and more, are loaded from different origins, which may not be of the origin where the resources are stored.
+
+CORS operates by adding a new HTTP header that allows the webserver to speak up to a list of whitelisted domains allowed to connect and interact with the server. This process is also browser enforced; the browser reads the header and processes accordingly.
+
+The following CORS headers are the most used:
+
+-Access-Control-Allow-Origin: This header is a response header, indicating that as soon as a request is made to the server for exchanging data, the server responds with a header informing the browser whether the request's origin is listed inside the value of the response. If the header is not present or the response header does not contain the request origin inside the header, the request is dropped, and a security error is raised; otherwise, the request is processed.
+
+-Access-Control-Allow-Methods: This is another response header; the server responds with this header and instructs the browser to check for allowed HTTP methods mentioned inside of it. If the server only allows GET and a POST request is initiated, it will be dropped if not mentioned in this list.
+
+-Origin: This request header tells the server from which domain origin the request was attempted. The origin header is always sent alongside cross-domain requests.\
+
+### Login using default credentials
+
+Go back to the browser and visit demo.com:5000.
+
+demo.com:5000
+
+> If you encounter any issues, try visiting http://192.168.1.100:5000.
+> 
+>   
+
+Secondly, click on the CORS link. The student is presented with a login page. Type the following default credentials (username: admin, password: admin) to continue.
+
+admin
