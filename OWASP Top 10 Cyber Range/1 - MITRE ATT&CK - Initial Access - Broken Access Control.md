@@ -60,12 +60,23 @@ Since the attacker does not want the victim to see the form, the input element i
 </form>
 ```
 
-As the final step, the attacker includes some JavaScript inside a script tag to automatically submit the form when the page is loaded. JavaScript calls the getElementByID() method on the HTML document with the ID of the form ("csrf-form") that the attacker set in the second line as an argument.
-
-TypeCopy
+As the final step, the attacker includes some JavaScript inside a `script` tag to *automatically* submit the form when the page is loaded. JavaScript calls the `getElementByID()` method on the HTML document with the ID of the form ("csrf-form") that the attacker set in the second line as an argument.
 
 `<script>document.getElementById("csrf-form").submit()</script>`
 
 Once the form is submitted, the browser passes the victim's cookies to the original website through the HTTP POST request, making it seem as if the victim purposely changed the color to 'Hacked'.
 
 Lastly, click on the Save button to save the changes made.
+# Setup the evil python server
+
+The challenge is to make the `evil-csrf.html` file accessible from other hosts. Therefore, start a python server on port `1337` by typing the following command in the terminal.
+`sudo python3 -m http.server 1337`
+
+The attacker can now use various social engineering attack methods to trick the victim user into clicking the malicious URL. One example includes sending an appealing email to the victim.
+# Visit the malicious page in browser
+
+Next, open a new tab and load the evil page previously created by typing the following command:
+
+`localhost:1337/evil-csrf.html
+
+The command will now send a POST request to the application and change the color value to the new value 'Hacked!'.
