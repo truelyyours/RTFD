@@ -222,6 +222,53 @@ def menu():
         decoded_token = jwt.decode(jwt_token, secret, algorithms=[algorithm])
         decoded_token = json.dumps(decoded_token)
         print(decoded_token)
-    
+	elif(choice == 2):
+		payload = input('Payload {"key": "value"}: ')
+        payload = json.loads(payload)
+        token = jwt.encode(payload, secret, algorithm)
+        if(token != ''):
+            print('\nJWT Token: {}'.format(token))
+if __name__ == '__main__':
+    menu()
 ```
+# Authenticating with the new token
 
+Firstly, copy the stored token in local storage from the web application.
+
+Next, run the created python code with Python.
+
+python3 jwt_decoder.py
+
+Choose the first option to decode the token and then paste the copied value.
+
+The python code will successfully decode the token and display its values in the terminal. Copy the output and run the python a second time, now choosing to encode the JWT. Change the identity field value to 2 and generate a new JWT token.
+Now, use the newly generated JWT token to replace the one stored in the browser's local storage.
+
+Lastly, click on the Show userId button to check if the server accepted the tampered token.
+![[Screenshot 2025-02-19 at 10.29.22.png]]
+# Access Control Best Practices
+
+Access control enforces the policy that prevents users from acting outside of the intended permissions. Failures typically lead to unauthorized information disclosure, modification destruction of all data, or the performance of a business function outside the user's limits.
+
+Access control vulnerabilities can generally be prevented by taking a defense-in-depth approach and applying the following principles:
+
+- Do Not Rely on Obfuscation: Obfuscation is insufficient to keep sensitive information safe.
+
+- Unless a resource is publicly accessible, deny access by default.
+
+- Wherever possible, use a single application-wide mechanism for enforcing access controls.
+
+- At the code level, make it mandatory for developers to declare the access allowed for each resource and deny access by default.
+
+- Ensure that all users, programs, or processes are only given as little necessary access as possible.
+
+- Log all Access Control failures.
+
+- Thoroughly audit and test access controls to ensure they are working as designed.
+
+
+Most developers use the classic method of adding a secret token named anti-CSRF to prevent CSRF vulnerabilities. This token is added to all sensitive requests and is verified by the server for authenticity. The anti-CSRF token is a random string only known to the user's browser and the web application.
+
+When an operation is submitted, the web application checks for the presence of the correct token.
+
+The parameter value of the token is examined and validated by the server to the logged-in user's session. If a mismatch occurs, the request is denied.
