@@ -136,11 +136,11 @@ To ensure proper inspections, reset the iptables policy with the following comma
 `iptables -F INPUT
 
 Most file systems assign permissions to users and groups, controlling access to files and directories. In Linux, each file and directory has three permission groups:
-`-owner`: Permissions apply only to the file's owner. -group: Permissions apply to the group assigned to the file. -all users: Permissions apply to all other users on the system.
+`-owner`: Permissions apply only to the file's owner. `-group`: Permissions apply to the group assigned to the file. `-all` users: Permissions apply to all other users on the system.
 
 Each file or directory has three basic permission types:
 
-`-read`: Allows viewing the file's contents. -write: Allows modifying the file or directory. -execute: Allows executing the file or listing directory contents.
+`-read`: Allows viewing the file's contents. `-write`: Allows modifying the file or directory. `-execute`: Allows executing the file or listing directory contents.
 
 To test file permissions, create a file and view its permissions with ls -al:
 `touch test.txt
@@ -156,4 +156,71 @@ The file's permissions will be shown as `-rw-r--r-- 1`.
 
 -The final group (`rw-r--r--`) shows the permissions for all users: read-only.
 
--root root shows the owner and group names.
+`-root` root shows the owner and group names.
+# Admin file privileges
+
+On the terminal, change user to _kali_, switch directory as shown below and list the content. Two directories will be listed.
+`su kali
+`cd /home/kali/Desktop/Challenges/Filesystem_permissions/
+`ls
+
+Go to _Guest_ and list all the files.
+`cd Guest
+`ls -al
+
+There is a file in this directory, owned by user guest. The permissions show that the owner and group can read the file, but only the owner can modify it. Other users cannot read, write, or execute it. If the cat command is run as user admin, the "Permission denied" error is shown.
+`cat guest_notes.txt
+### Explicit Annotation
+
+File or directory permissions can be changed using either explicit annotation or octal notation. The explicit method uses the following modifiers:
+
+`-u`: owner `-g`: group `-o`: other users `-a`: all users
+
+To allow the user admin to read the guest_notes.txt file, use o+r to modify the permissions. The command must be run with sudo because the file's permissions are being changed by a non-owner user:
+`sudo chmod o+r guest_notes.txt
+
+Then, verify the changes:
+`ls -al
+`cat guest_notes.txt
+
+What output will be displayed? **Guest permissions**
+# Octal notations
+
+Another way of setting permissions is by using the octal notation method. Setting permissions boils down to changing bits. A file that has read, write, and execute permissions for all users has all the bits set:
+`rwx rwx rwx = 111 111 111
+`rwx rw- r-- = 111 110 100
+
+The value 111 in binary represents 7, 110 represents 6, 100 represents 4 and so on, so the permissions above can be written as:
+`rwx rwx rwx = 111 111 111 = 7 7 7
+`rwx rw- r-- = 111 110 000 = 7 6 4
+
+Listing the files in the _/Development_ directory shows that all users can read _developer_note.txt_. In a real-world development environment, files like this would be restricted, as they are considered intellectual property. The same applies to any sensitive or proprietary files. If such files are accessible to unauthorized users (e.g., guest users), it constitutes a security incident.
+
+The commands below switch from admin to guest and reveal the content of _developer_notes.txt_.
+`cd ..
+`cd Development/
+`su guest
+`guest
+`cat developer_notes.txt
+### Revoking permissions
+
+To revoke the permissions of _developer_notes.txt_, revoke read rights for other users:
+`rw- r-- --- = 110 100 000
+`su developer
+`developer
+`chmod 640 developer_notes.txt
+`ls -al
+
+### Changed permissions
+
+When a guest user tries to read a file owned by the developer, they will receive a _Permission denied_ error. This indicates that the file's permissions are correctly set, allowing only the developer to view or modify it. To prevent information disclosure, ensure that users can only access files they own or those necessary for normal workflow.
+`su guest
+
+When prompted for the password, enter:
+`guest
+`ls -al
+`cat developer_notes.txt
+
+The same output would be achieved with the `chmod o-r developer_notes.txt` command.
+
+What numerical value corresponds to the permissions rw-r-----? `640`
