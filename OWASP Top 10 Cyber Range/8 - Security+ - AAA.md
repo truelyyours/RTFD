@@ -72,38 +72,46 @@ How many directories are listed in kpcli? **2**
 
 Everything typed after _Password:_ will not be shown. This is a countermeasure to prevent accidental password disclosure in case the device's screen is visible to other people.
 
-to exit the editor put a single . on a line and press _enter_
+to exit the editor put a single `.` on a line and press _enter_
 
 To store the credentials just entered, write them to a KeePass database:
-
-saveas ssh_credentials.kdbx
+`saveas ssh_credentials.kdbx
 
 When prompted for the master password, enter the following password:
-
-secret
+`secret
 
 The master password is used to encrypt and decrypt the database. When choosing a master password, make sure to select a secure and robust password.
 
-While not necessary since we haven't left kpcli, if you were to exit and try to get back in you would have to enter the password. If that were the case you would start kpcli again, load the database and type the new password:
-
-open ssh_credentials.kdbx
-
-secret
-
+While not necessary since we haven't left `kpcli`, if you were to exit and try to get back in you would have to enter the password. If that were the case you would start `kpcli` again, load the database and type the new password:
+`open ssh_credentials.kdbx
+`secret
 ### Viewing SSH Credentials
 
 Change directory to ssh if you are not already there and list the content to see the password entries:
+`cd ssh/
+`ls
 
-cd ssh/
+The show command lists all the details.
+`show 0
+`show 0 -f
+
+Which flag is used to see the password in plaintext? `-f`
+# KeePass database
+
+There is another KeePass database located on the admin's Desktop. Running the following commands, displays the password.
+
+open /home/kali/Desktop/Challenges/Password_vaults/test_credentials.kdbx
+
+admin
 
 ls
 
-The show command lists all the details.
+cd test/
 
-show 0
+ls
 
 show 0 -f
 
 ---
 
-Which flag is used to see the password in plaintext?
+What is the password displayed in the output?
