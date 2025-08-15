@@ -46,4 +46,28 @@ To store this in a KeePass database, disconnect from the SSH server and open _kp
 `exit
 `kpcli
 
-Which of the folowing best describes the function of the _master password_ in a password vault like KeePass?
+Which of the folowing best describes the function of the _master password_ in a password vault like KeePass? **It is the only password a user needs to remeber to unlock the entire password database**
+# Kpcli
+
+To list the existing directories, type the following command:
+`ls
+
+Since SSH is a protocol on its own, create another directory as shown below:
+`mkdir ssh
+`cd ssh
+
+To move onto the next step lets create a new entry with the following command:
+`new
+### New SSH entry
+
+To add a new entry in the ssh directory, type new. Then fill in the information required. To follow with the challenge, type the same commands as listed below:
+`ssh_passphrase
+`admin
+`secret
+`secret
+
+root@192.168.1.100
+
+---
+
+How many directories are listed in kpcli?
