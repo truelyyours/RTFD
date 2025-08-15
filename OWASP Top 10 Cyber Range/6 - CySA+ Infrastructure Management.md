@@ -173,4 +173,36 @@ Hash functions provide a way to map a long string to a shorter fixed-length outp
 To protect the integrity of the honeypot logs, we can generate a hash value for the `honeypot_backup.enc` file. 
 `shasum /home/ubuntu-user/honeypot_logs.enc
 
-What type of hash algorithm is used by the last command?
+What type of hash algorithm is used by the last command? `SHA1`
+# Integrity checks
+
+You can decide whether you want to store the hash in the Keepass database or generate it each time before sending the file to a peer. To save it to Keepass, follow these steps:
+
+● type kpcli in the terminal window to start using the Keepass program
+
+● use the open command to load the password_database.kdbx file
+
+● use cd to switch to the backup_encryption/ directory
+
+● use ls to list all password entries
+
+● use edit to modify the content of encrypted_honeypot_logs
+
+● press the return key for each value that you do not want to modify
+
+`kpcli
+`open /home/ubuntu-user/password_database.kdbx
+`S@fePassword!
+`cd backup_encryption/
+`ls
+`edit 0
+`hash:
+`.
+`y
+
+you want to share the logs with another person, you should send the file and the hash value. The receiving end will download the data and run the (in this case) `shasum` command to generate their own hash. Applying the same hash function to a file will always generate the same result.
+
+The receiving end will compare their own hash value with the one you delivered and if they both match, they will know the content of the file was not altered throughout transmission.
+
+After executing the last set of commands, is the hash value the same?
+**yes**
