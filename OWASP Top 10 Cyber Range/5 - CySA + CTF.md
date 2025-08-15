@@ -26,5 +26,15 @@ You can also apply a display filter in wireshark: ftp-data
 
 Right click at hash and go to Follow > TCP Stream and Save As it in _/home/kali/leaked_hash.txt_.
 
+What is the username found in the leaked file? `admin`
+# Assessing credential strength
 
-What is the username found in the leaked file?
+Try and find out if the hash found is weak and if the attacker could have used methods like brute forcing to crack it. Rainbow table attacks are one of the ways used for breaking hash-based authentication. Hash values of most common passwords are generated and stored in files known as rainbow tables. When the plaintext version of a hashed password is needed, the hash gets compared to all the values in that table. One tool that performs such an attack is john. To use it, open the terminal and type the following command:
+
+john --wordlist=/usr/share/wordlists/rockyou.txt leaked_hash.txt > crackedpassword.txt
+
+Save the output to a new _crackedpassword.txt_ file. Read the file to see if any hash got cracked.
+
+---
+
+After cracking the file,what is the user's password?
