@@ -100,18 +100,60 @@ Which flag is used to see the password in plaintext? `-f`
 
 There is another KeePass database located on the admin's Desktop. Running the following commands, displays the password.
 
-open /home/kali/Desktop/Challenges/Password_vaults/test_credentials.kdbx
+`open /home/kali/Desktop/Challenges/Password_vaults/test_credentials.kdbx
+`admin
+`ls
+`cd test/
+`ls
+`show 0 -f
 
-admin
+What is the password displayed in the output? `secure_password`
+### Mandatory Access Control (MAC)
 
-ls
+_Mandatory Access Control (MAC)_ is a security mechanism where the operating system limits users' ability to access or perform operations on system constructs such as files, directories, TCP/UDP ports, shared memory, and I/O devices. Each user and construct has security attributes, and when a user attempts access, the OS kernel checks these attributes against authorization rules to determine if access is granted. A database management system can also enforce MAC, with objects like tables, views, and procedures. MAC is controlled by a security policy administrator, meaning users cannot override the system.
 
-cd test/
+For network access control, the most common security mechanism is the firewall, which controls data transmission to and from a device. A traditional firewall in Linux is iptables, a utility for configuring IP packet filter rules. These rules are organized in tables containing chains that define how network traffic should be handled. Iptables requires root privileges to function.
 
-ls
+Since this lab only requires access from the ssh_connection container, access can be restricted to a specific IP range. The host machine and containers are assigned IPs from the range 192.168.1.0. A rule can be added in iptables to block connections from other IP ranges. Initially, iptables should have no rules. To list the current rules, run the following commands:
+`exit
+`sudo su root
+`iptables -L
+### Iptables
 
-show 0 -f
+To see which networks the container is part of, run the ifconfig command:
+`ifconfig
 
----
+The output of `ifconfig` shows that the _IP_ assigned to the challenges container as well as the subnet mask under the _eth0_ entry. Based on this information the range that needs to be allowed is 192.168.0.0/16. In iptables, the command would look like the following:
+`iptables -I INPUT ! -s 192.168.0.0/16 -j DROP
 
-What is the password displayed in the output?
+To see the updated `iptable`, list the entries again using iptables -L.
+`iptables -L
+
+Who controls the security policy in a MAC system? **The system administrator or security policy administrator**
+# Changing file permissions
+
+To ensure proper inspections, reset the iptables policy with the following command as the root user:
+`iptables -F INPUT
+
+Most file systems assign permissions to users and groups, controlling access to files and directories. In Linux, each file and directory has three permission groups:
+`-owner`: Permissions apply only to the file's owner. -group: Permissions apply to the group assigned to the file. -all users: Permissions apply to all other users on the system.
+
+Each file or directory has three basic permission types:
+
+`-read`: Allows viewing the file's contents. -write: Allows modifying the file or directory. -execute: Allows executing the file or listing directory contents.
+
+To test file permissions, create a file and view its permissions with ls -al:
+`touch test.txt
+`ls -al test.txt
+
+The file's permissions will be shown as `-rw-r--r-- 1`.
+
+-The first dash indicates it's a file (a directory would show d).
+
+-The next set of characters (`rw-r--r--`) shows the owner's permissions: read and write, but not execute.
+
+-The second group (`rw-r--r--`) shows the group's permissions: read-only.
+
+-The final group (`rw-r--r--`) shows the permissions for all users: read-only.
+
+-root root shows the owner and group names.
