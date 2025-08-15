@@ -37,3 +37,36 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 22.12 seconds
 ```
 
+Then we do directory traversal:
+```
+┌──(truelyyours㉿kali)-[~/tryhackme/AllInOne]
+└─$ gobuster dir -w /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt -u http://10.201.71.36 -e 
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.201.71.36
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Expanded:                true
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+http://10.201.71.36/.hta                 (Status: 403) [Size: 277]
+http://10.201.71.36/.htaccess            (Status: 403) [Size: 277]
+http://10.201.71.36/.htpasswd            (Status: 403) [Size: 277]
+http://10.201.71.36/index.html           (Status: 200) [Size: 10918]
+http://10.201.71.36/server-status        (Status: 403) [Size: 277]
+http://10.201.71.36/wordpress            (Status: 301) [Size: 316] [--> http://10.201.71.36/wordpress/]
+Progress: 4744 / 4745 (99.98%)
+===============================================================
+Finished
+===============================================================
+```
+
+So, I can see a WordPress file so I visit that endpoint and explore a bit.
+We have a login page `http://10.201.71.36/wordpress/wp-login.php`
