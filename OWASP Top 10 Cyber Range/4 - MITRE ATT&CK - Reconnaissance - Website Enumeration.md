@@ -115,6 +115,28 @@ JoomScan provides links with additional information on the vulnerabilities of th
 In order to enumerate the components of joomla web enter the following command:
 `perl joomscan.pl --url 172.20.1.114:8080 --enumerate-components
 
+In which directory is the admin page located? (Enter full URL path): **`http://172.20.1.114:8080/administrator/`**
+# Drupwn
+[_Drupwn_](https://github.com/immunIT/drupwn) is an automated Drupal enumeration tool and security scanner developed in Python. It performs both enumeration and exploitation on the target domain, testing for vulnerabilities associated with known CVEs. Drupwn operates in two modes: enum for enumeration and exploit for testing and exploiting CVEs.
 
+To scan a Drupal website in enumeration mode, first navigate to the Drupwn directory and use the following command:
 
-In which directory is the admin page located? (Enter full URL path)
+cd ../drupwn
+
+python3 drupwn --mode enum --target http://172.20.1.115:8080
+
+The results display information such as the default files, nodes, users, and the drupal version number, which if vulnerable may be exploited by an attacker.
+### Droopescan
+
+_Droopescan_ is a plugin-based CMS security scanner that helps identify issues across multiple CMS platforms. It can perform tests such as plugin checks, theme checks, version checks, and interesting URL checks. The ability to test multiple CMS platforms sets Droopescan apart.
+
+To scan wordpress using Droopescan, run the following command:
+`droopescan scan wordpress -u 172.20.1.114:8000
+
+Scan joomla using the following command:
+`droopescan scan joomla -u 172.20.1.114:8080
+
+Scan drupal using the following command:
+`droopescan scan drupal -u 172.20.1.115:8080
+
+Which URL was found in this scan? `http://172.20.1.115:8080/user/login/`
