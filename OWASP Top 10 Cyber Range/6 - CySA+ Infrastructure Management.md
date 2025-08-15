@@ -121,6 +121,56 @@ You will be prompted to provide a password. Make sure your passwords are always 
 
 You now have two versions of the same file on your device: the plaintext file (backup_logs.zip) and the encrypted file (backup_logs.enc). You may choose to delete the plaintext file.
 
----
+Which command-line utility is used to generate private keys, encrypt, decrypt, create Certificate Signing Requests, generate certificates, and identify certificate information? `openssl`
+# Securing passwords with a password vault
 
-Which command-line utility is used to generate private keys, encrypt, decrypt, create Certificate Signing Requests, generate certificates, and identify certificate information?
+When using password authentication, users often reuse the same credentials across multiple accounts or choose weak passwords for ease of remembering. Strong, random, and auto-generated passwords are difficult to brute-force but easy to forget. This issue led to the development of password vaults. A password vault is a program that helps users store, generate, and manage passwords. By encrypting the password storage, the vault allows users to access multiple passwords with a single master password. These vaults are commonly known as password managers.
+
+Among various tools and versions, [KeePass](https://keepass.info/) is a well-known option. KeePass is a free, open-source password manager that stores passwords in an encrypted database, accessible with one master key. The `kpcli` tool is a command-line utility for creating and editing KeePass entries and databases. To store the password for encrypting the honeypot_logs.zip file, open a terminal and type kpcli.
+`kpcli`
+
+
+What is the primary purpose of KeePass? **To generate and manage passwords in an encrypted database accessible with a master key**
+# Kpcli
+
+Type the following command to create a directory for storing passwords used for encryption:
+`mkdir backup_encryption
+
+Navigate to the _backup_encryption_ directory by typing:
+`cd backup_encryption/
+
+To add a new entry in the _backup_encryption_ directory, type:
+`new
+
+When prompted for the title, type:
+`encrypted_honeypot_logs
+
+Press _Enter_ until you are prompted for the comments. Then enter the following:
+
+This password was used to encrypt the zipped honeypot log file
+
+Finish the entry by typing: `.`
+
+Everything typed after "Password: " will not be shown. This is a countermeasure to prevent accidental password disclosure in case the device's screen is visible to other people.
+
+To store the credentials just entered, write them to a KeePass database:
+`saveas /home/ubuntu-user/password_database.kdbx
+
+When prompted for the master password, use:
+`S@fePassword!
+
+The master password is the only password that needs to be remembered from now on.
+
+_Quit_ terminates _kpcli_ and prompts back the terminal.
+
+What command is used to store the credentials in a KeePass database? `saveas`
+# Securing data in motion
+
+Since the honeypot log files will be further analyzed to extract information or will be shared with security teams, it is crucial to ensure that no data has been altered either accidentally during file transfer or purposely by an adversary or unauthorized party.
+
+Hash functions provide a way to map a long string to a shorter fixed-length output string known as hash-value or digest. They became essential tools in cryptography to construct digital signatures, integrity verification, password protection, and public-key encryption.
+
+To protect the integrity of the honeypot logs, we can generate a hash value for the `honeypot_backup.enc` file. 
+`shasum /home/ubuntu-user/honeypot_logs.enc
+
+What type of hash algorithm is used by the last command?
