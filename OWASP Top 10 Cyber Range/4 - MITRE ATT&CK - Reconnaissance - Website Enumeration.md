@@ -120,10 +120,8 @@ In which directory is the admin page located? (Enter full URL path): **`http://1
 [_Drupwn_](https://github.com/immunIT/drupwn) is an automated Drupal enumeration tool and security scanner developed in Python. It performs both enumeration and exploitation on the target domain, testing for vulnerabilities associated with known CVEs. Drupwn operates in two modes: enum for enumeration and exploit for testing and exploiting CVEs.
 
 To scan a Drupal website in enumeration mode, first navigate to the Drupwn directory and use the following command:
-
-cd ../drupwn
-
-python3 drupwn --mode enum --target http://172.20.1.115:8080
+`cd ../drupwn
+`python3 drupwn --mode enum --target http://172.20.1.115:8080
 
 The results display information such as the default files, nodes, users, and the drupal version number, which if vulnerable may be exploited by an attacker.
 ### Droopescan
