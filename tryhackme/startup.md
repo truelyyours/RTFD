@@ -27,5 +27,3 @@ I put `linpeas.sh` in `/tmp` path and have some interesting findings.
 /initrd.img.old
 ```
 
-
-root      1041  0.0  0.2  24040  2304 ?        Ss   01:56   0:00 /usr/sbin/vsftpd /etc/vsftpd.conf
