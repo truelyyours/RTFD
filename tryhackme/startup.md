@@ -8,6 +8,10 @@ Here we have Anonymous ftp access. However the interesting part is the `/ftp` di
 Doing a simple `gobuster` search, I find that there is `/files` endpoint that shows all the files/directories of the ftp root folder in the browser. So, this means we can "execute" or "access" a file via browser. 
 
 
+Beautify the shell a bit:
+`python3 -c 'import pty; pty.spawn("/bin/bash")'`
+
+
 # Privilege Escalation
 I put `linpeas.sh` in `/tmp` path and have some interesting findings.
 
