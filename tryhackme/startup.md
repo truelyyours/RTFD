@@ -74,6 +74,7 @@ Moving on, I can only access the `/incidents` directory inside which I find a `p
 ```
 cp suspicious.pcapng /var/www/html/files/ftp/
 ```
+
 Using Wireshark, I can see a lot of `tcp` streams, one of which has data on a "reverse shell", implying that this has been compromised before as well! Here, I find a password(`c4ntg3t3n0ughsp1c3`), which appear to be of the user `lennie`.
 ![[Pasted image 20250823234147.png]]
 
