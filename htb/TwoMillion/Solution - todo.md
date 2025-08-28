@@ -92,5 +92,13 @@ Welp, let's send another POST request via curl:
 ```
 This base 64 can be decoded to our invite code and voila! We have our HTB account!
 ```
-
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/twomillion]
+└──╼ [★]$ curl -sq -X POST 2million.htb/api/v1/invite/generate | jq .data.code -r |base64 -d; echo
+1AJW5-GU5EJ-T3Z5O-ZN96C
 ```
+
+We login on the lading page:
+![[Pasted image 20250828183645.png]]
+
+The next Task (6) asks us to find endpoints. So, I send this to BurpSuite and explore endpoints!
+On the `/home` page (Dashboard) there many option on the right. So, I explore those and the only new links are `/rules`, `/changelog` and `/home/access`. From the "Access" part, we can download VPN files. So, I intercept this request via BurpSuite and download a VPN file.
