@@ -139,3 +139,6 @@ When checking different API endpoints, `/api/v1` gives us the list of all the AP
 ```
 
 We have 3 "admin" APIs available too! 
+`/api/v1/admin/auth`: simply tells us whether we are admin or not.
+`/api/v1/admin/vpn/generate`: gives us 401 Unauthorized. So, that can't be used.
+`/api/v1/admin/setting/update`: here it tells us to send content as JSON (it's a put request) and asks us for email
