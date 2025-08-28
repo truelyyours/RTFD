@@ -141,4 +141,8 @@ When checking different API endpoints, `/api/v1` gives us the list of all the AP
 We have 3 "admin" APIs available too! 
 `/api/v1/admin/auth`: simply tells us whether we are admin or not.
 `/api/v1/admin/vpn/generate`: gives us 401 Unauthorized. So, that can't be used.
-`/api/v1/admin/setting/update`: here it tells us to send content as JSON (it's a put request) and asks us for email
+`/api/v1/admin/setting/update`: here it tells us to send content as JSON (it's a put request) and asks us for `email` and `is_admin` parameters. So, I go ahead and share it!
+![[Pasted image 20250828190352.png]]
+
+Well! Now we are admin!
+Let's try to login again and checkout the portal. Nothing changes. So, checking the other two API endpoints for admin, when hitting the `/generate`, it asks for a `username`. As it turns out we can pass anything! So, thing indicated there may be a Command Injection vulnerability here!
