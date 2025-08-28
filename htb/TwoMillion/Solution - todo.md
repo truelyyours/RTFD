@@ -235,3 +235,26 @@ I'm know you're working as fast as you can to do the DB migration. While we're p
 
 HTB Godfather
 ```
+
+So, we probably have to exploit this "OverlayFS". I recently learned using `metasploit`, so I head over to it (`msgconsole`) and search for "OverlayFS":
+```
+[msf](Jobs:0 Agents:0) >> search OverlayFS
+
+Matching Modules
+================
+
+   #  Name                                                  Disclosure Date  Rank       Check  Description
+   -  ----                                                  ---------------  ----       -----  -----------
+   0  exploit/linux/local/cve_2021_3493_overlayfs           2021-04-12       great      Yes    2021 Ubuntu Overlayfs LPE
+   1    \_ target: x86_64                                   .                .          .      .
+   2    \_ target: aarch64                                  .                .          .      .
+   3  exploit/linux/local/gameoverlay_privesc               2023-07-26       normal     Yes    GameOver(lay) Privilege Escalation and Container Escape
+   4    \_ target: Linux_Binary                             .                .          .      .
+   5    \_ target: Linux_Command                            .                .          .      .
+   6  exploit/linux/local/cve_2023_0386_overlayfs_priv_esc  2023-03-22       excellent  Yes    Local Privilege Escalation via CVE-2023-0386
+   7  exploit/linux/local/overlayfs_priv_esc                2015-06-16       good       Yes    Overlayfs Privilege Escalation
+   8    \_ target: CVE-2015-1328                            .                .          .      .
+   9    \_ target: CVE-2015-8660                            .                .          .      .
+```
+
+Among these, there are three interesting CVEs among which 2 are very recent one (given the machine was released in 2023). The `0` works on 2021 Ubuntu. Taking a quick look at remote system, we see it is running 2022 Ubuntu! 
