@@ -25,4 +25,72 @@ This is the classic HTB site. Back then we had to find an invite code to join th
 Upon clicking "Join HTB", we are taken to the page `/invite`:
 ![[Pasted image 20250828181750.png]]
 
-The `/invite page`
+The `/invite` page loads script from `inviteapi.min.js`. We can beautify the javascript and get to know the function:
+```javascript
+function verifyInviteCode(code) {
+    var formData = {
+        "code": code
+    };
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: formData,
+        url: '/api/v1/invite/verify',
+        success: function(response) {
+            console.log(response)
+        },
+        error: function(response) {
+            console.log(response)
+        }
+    })
+}
+
+function makeInviteCode() {
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: '/api/v1/invite/how/to/generate',
+        success: function(response) {
+            console.log(response)
+        },
+        error: function(response) {
+            console.log(response)
+        }
+    })
+}
+```
+
+So, we have a `makeInviteCode` function that can be helpful! It sends a POST request. Let's send this POST request via curl from terminal.
+```
+(venv) ┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb]
+└──╼ [★]$ curl -sq -X POST 2million.htb/api/v1/invite/how/to/generate | jq .
+{
+  "0": 200,
+  "success": 1,
+  "data": {
+    "data": "Va beqre gb trarengr gur vaivgr pbqr, znxr n CBFG erdhrfg gb /ncv/i1/vaivgr/trarengr",
+    "enctype": "ROT13"
+  },
+  "hint": "Data is encrypted ... We should probbably check the encryption type in order to decrypt it..."
+}
+```
+So we are given a ROT 13 encrypted data. This is decrypted to:
+```
+In order to generate the invite code, make a POST request to /api/v1/invite/generate
+```
+
+Welp, let's send another POST request via curl:
+```
+{
+  "0": 200,
+  "success": 1,
+  "data": {
+    "code": "VDdRMUctUDVHQUYtQURHR0wtR08xVjM=",
+    "format": "encoded"
+  }
+}
+```
+This base 64 can be decoded to our invite code and voila! We have our HTB account!
+```
+
+```
