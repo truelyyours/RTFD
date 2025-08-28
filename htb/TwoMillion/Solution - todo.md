@@ -102,3 +102,40 @@ We login on the lading page:
 
 The next Task (6) asks us to find endpoints. So, I send this to BurpSuite and explore endpoints!
 On the `/home` page (Dashboard) there many option on the right. So, I explore those and the only new links are `/rules`, `/changelog` and `/home/access`. From the "Access" part, we can download VPN files. So, I intercept this request via BurpSuite and download a VPN file.
+
+When checking different API endpoints, `/api/v1` gives us the list of all the APIs present. (Note that you dont have to do this manually. You can use any of the other tools to traverse different API paths!)
+```json
+{
+  "v1": {
+    "user": {
+      "GET": {
+        "/api/v1": "Route List",
+        "/api/v1/invite/how/to/generate": "Instructions on invite code generation",
+        "/api/v1/invite/generate": "Generate invite code",
+        "/api/v1/invite/verify": "Verify invite code",
+        "/api/v1/user/auth": "Check if user is authenticated",
+        "/api/v1/user/vpn/generate": "Generate a new VPN configuration",
+        "/api/v1/user/vpn/regenerate": "Regenerate VPN configuration",
+        "/api/v1/user/vpn/download": "Download OVPN file"
+      },
+      "POST": {
+        "/api/v1/user/register": "Register a new user",
+        "/api/v1/user/login": "Login with existing user"
+      }
+    },
+    "admin": {
+      "GET": {
+        "/api/v1/admin/auth": "Check if user is admin"
+      },
+      "POST": {
+        "/api/v1/admin/vpn/generate": "Generate VPN for specific user"
+      },
+      "PUT": {
+        "/api/v1/admin/settings/update": "Update user settings"
+      }
+    }
+  }
+}
+```
+
+We have 3 "admin" APIs available too! 
