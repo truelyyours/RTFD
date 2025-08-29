@@ -77,6 +77,11 @@ The base64 string is the PHP code `<?php echo system($_GET['cmd'])?`.
 Now that we have `yuyu.php` file on server, we can access it at `/Gibbon-LMS/yuyu.php` and we can pass a `cmd` parameter which is a windows command:
 ![[Pasted image 20250829185709.png]]
 
-Noice! So, we can now execute commands and get a reverse shell!
+Noice! So, we can now execute commands and get a reverse shell! You can simply go to https://www.revshells.com/ and get your shell code in base64 with your IP and port specified!
+![[Pasted image 20250829190724.png]]
+
+We can then listen on our local machine and send the above text as argument of `cmd`. Remember that we need to substitute "space" with "+" as you cannot pass white space in URL parameters. Send the request and you have the reverse shell 🎉.
+
+
 
 
