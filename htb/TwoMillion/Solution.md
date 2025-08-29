@@ -334,8 +334,8 @@ And cheers 🥂, we have the root access and hence, the root flag!
 Of course, you can also find a proof of concept exploit and manually run it and get a root shell! As an exercise, feel free to look up how and why this exploit works!
 
 Good work, now treat yourself to a full bottle of that pure sweet god's nectar!! 💧💧🎉😎
-
 ## Alternate Priv Esc
 
 The Guided mode suggests for this exploit so let's check it out.
 The installed version of GLIBC is `2.35`. As the task asks us for CVE, we simply search in `msfconsole` and see that we have **CVE-2023-4911**. 
+So, we can simply use this and execute the exploit to get remote root shell! I would leave this as an exercise to let you get acquainted with `metasploit`
