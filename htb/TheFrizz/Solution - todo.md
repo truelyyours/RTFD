@@ -63,4 +63,7 @@ Next, we have "Staff Login" button which takes us to Gibbon LMS login (This site
 ![[Pasted image 20250829171201.png]]
 
 Trying with random email and password gives "Incorrect username **and** password" strange. Anyways, there is Forgot password button, which take us to `http://frizzdc.frizz.htb/Gibbon-LMS/index.php?q=passwordReset.php`. Seems like passing a file in the query param. So, maybe we can do arbitrary read? 
-A quick search lands me at 
+A quick search lands me at [CVE-2023-45878](https://nvd.nist.gov/vuln/detail/CVE-2023-45878). A public exploit is available at https://herolab.usd.de/security-advisories/usd-2023-0025/.
+Basically we can access a particular path (`/modules/Rubrics/rubrics_visualise_saveAjax.php`) which expects an 'img' tag and we can make it write arbitrary data under the pretext of bsae64 encoded image.
+
+So, I head over to Burpsuite and 
