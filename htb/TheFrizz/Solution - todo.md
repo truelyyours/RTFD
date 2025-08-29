@@ -1,4 +1,4 @@
-`TheFrizz` is a medium-difficulty Windows machine featuring a web application showcasing Walkerville Elementary School and a Gibbon CMS instance. The Gibbon-LMS instance is susceptible to unauthenticated arbitrary file write (CVE-2023-45878), which is used to write a PHP shell to the web application and gain access to the target. After gaining access to the system, a database settings file containing credentials to access MySQL includes a hash and salt for the user f.frizzle that can be cracked. After cracking the password, we authenticate to the target using SSH with GSSAPI/Kerberos. We request a TGT, which is then used to authenticate via Kerberos authentication. A deleted 7Zip archive is discovered in the `fiona` user&#039;s recycling bin which is extracted revealing a WAPT setup and includes a configuration file with base64-encoded credentials used to authenticate as the `M.Schoolbus` user. `M.Schoolbus` is a member of the `Group Policy Creator Owners`, which allows them to create GPOs within the domain, which is leveraged to escalate privileges to `NT Authority\System`.
+`TheFrizz` is a medium-difficulty Windows machine featuring a web application showcasing Walkerville Elementary School and a Gibbon CMS instance.
 # Init
 
 Starting with the `nmap` scan, we have SSH, LDAP and Kerberos ports open along with `frizzdc.firzz.htb` and `firzz.htb` on port `80`.
@@ -59,6 +59,8 @@ Each string is 28 bytes but is a simple base64 encoding. Lols.
  b"e's finest attorneys."]
 ```
 
-Next, we have "Staff Login" button which takes us to Gibbon LMS login mage asking for username password and an option to start Student and Staff applications!
+Next, we have "Staff Login" button which takes us to Gibbon LMS login (This site is based on Gibbon framework) page asking for username password and an option to start Student and Staff applications!
 ![[Pasted image 20250829171201.png]]
 
+Trying with random email and password gives "Incorrect username **and** password" strange. Anyways, there is Forgot password button, which take us to `http://frizzdc.frizz.htb/Gibbon-LMS/index.php?q=passwordReset.php`. Seems like passing a file in the query param. So, maybe we can do arbitrary read? 
+A quick search lands me at 
