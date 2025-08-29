@@ -41,3 +41,24 @@ Host script results:
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 100.65 seconds
 ```
+
+The port 80 takes us to a WES School website hosted on `apache` server. There is a peculiar text under "Hacking & The Law" course name:
+`V2FudCB0byBsZWFybiBoYWNraW5n IGJ1dCBkb24ndCB3YW50IHRvIGdv IHRvIGphaWw/IFlvdSdsbCBsZWFy biB0aGUgaW4ncyBhbmQgb3V0cyBv ZiBTeXNjYWxscyBhbmQgWFNTIGZy b20gdGhlIHNhZmV0eSBvZiBpbnRl cm5hdGlvbmFsIHdhdGVycyBhbmQg aXJvbiBjbGFkIGNvbnRyYWN0cyBm cm9tIHlvdXIgY3VzdG9tZXJzLCBy ZXZpZXdlZCBieSBXYWxrZXJ2aWxs ZSdzIGZpbmVzdCBhdHRvcm5leXMu`
+Each string is 28 bytes but is a simple base64 encoding. Lols.
+```
+[b'Want to learn hacking',
+ b" but don't want to go",
+ b" to jail? You'll lear",
+ b"n the in's and outs o",
+ b'f Syscalls and XSS fr',
+ b'om the safety of inte',
+ b'rnational waters and ',
+ b'iron clad contracts f',
+ b'rom your customers, r',
+ b'eviewed by Walkervill',
+ b"e's finest attorneys."]
+```
+
+Next, we have "Staff Login" button which takes us to Gibbon LMS login mage asking for username password and an option to start Student and Staff applications!
+![[Pasted image 20250829171201.png]]
+
