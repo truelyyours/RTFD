@@ -331,7 +331,7 @@ Mode              Size  Type  Last modified              Name
 ```
 
 And cheers 🥂, we have the root access and hence, the root flag! 
-Of course, you can also find a proof of concept exploit and manually run it and get a root shell! As an exercise, feel free to look up how and why this exploit works!
+Of course, you can also find a proof of concept exploit and manually run it and get a root shell! As an exercise, feel free to look up how and why this exploit works! Here is a link to an in-depth explanation: [CVE-2023-0386](https://securitylabs.datadoghq.com/articles/overlayfs-cve-2023-0386/)
 
 Good work, now treat yourself to a full bottle of that pure sweet god's nectar!! 💧💧🎉😎
 ## Alternate Priv Esc
