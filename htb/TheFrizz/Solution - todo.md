@@ -66,4 +66,4 @@ Trying with random email and password gives "Incorrect username **and** password
 A quick search lands me at [CVE-2023-45878](https://nvd.nist.gov/vuln/detail/CVE-2023-45878). A public exploit is available at https://herolab.usd.de/security-advisories/usd-2023-0025/.
 Basically we can access a particular path (`/modules/Rubrics/rubrics_visualise_saveAjax.php`) which expects an 'img' tag and we can make it write arbitrary data under the pretext of bsae64 encoded image.
 
-So, I head over to Burpsuite and 
+So, I head over to Burpsuite and send a POST request to above file and ask it to write php code into `asdf.php` file.
