@@ -92,6 +92,21 @@ PS C:\xampp\htdocs\Gibbon-LMS> whoami
 frizz\w.webservice
 ```
 
-Well, I don't know better so 
+Well, I don't know better so I look for the string `password` in all the files of current folder using `findstr -I "password" *.*`. It prints out a lot of data because we have a forgot password file too! We can exclude it and look at the data and find that `config.php` has a DB password!
+![[Pasted image 20250829193035.png]]
+
+I has whole SQL DB info too:
+```
+/**
+ * Sets the database connection information.
+ * You can supply an optional $databasePort if your server requires one.
+ */
+$databaseServer = 'localhost';
+$databaseUsername = 'MrGibbonsDB';
+$databasePassword = 'MisterGibbs!Parrot!?1';
+$databaseName = 'gibbon';
+```
+
+So, we can access the DB
 
 
