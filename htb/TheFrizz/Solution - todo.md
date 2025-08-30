@@ -208,4 +208,27 @@ Mode                 LastWriteTime         Length Name
 -a-hs          10/29/2024  7:31 AM            129 desktop.ini
 ```
 
-Here we have some deleted archive files. So, let's recover it and have a look!
+Here we have some deleted archive files. An interesting thing I found is that the 1st file is the metadata of the 2nd file which is the actually deleted file. You can check this by doing
+```
+PS C:\$RECYCLE.BIN\S-1-5-21-2386970044-1145388522-2932701813-1103> Format-Hex '.\$IE2XMEG.7z'
+
+   Label:
+C:\$RECYCLE.BIN\S-1-5-21-2386970044-1145388522-2932701813-1103\$IE2XMEG.7z
+
+          Offset Bytes                                           Ascii
+                 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+          ------ ----------------------------------------------- -----
+0000000000000000 02 00 00 00 00 00 00 00 5B 20 D0 01 00 00 00 00 �       [ Ð�       
+0000000000000010 00 16 97 32 0F 2A DB 01 3C 00 00 00 43 00 3A 00  ��2�*Û�<   C :    
+0000000000000020 5C 00 55 00 73 00 65 00 72 00 73 00 5C 00 66 00 \ U s e r s \ f    
+0000000000000030 2E 00 66 00 72 00 69 00 7A 00 7A 00 6C 00 65 00 . f r i z z l e    
+0000000000000040 5C 00 41 00 70 00 70 00 44 00 61 00 74 00 61 00 \ A p p D a t a    
+0000000000000050 5C 00 4C 00 6F 00 63 00 61 00 6C 00 5C 00 54 00 \ L o c a l \ T    
+0000000000000060 65 00 6D 00 70 00 5C 00 77 00 61 00 70 00 74 00 e m p \ w a p t    
+0000000000000070 2D 00 62 00 61 00 63 00 6B 00 75 00 70 00 2D 00 - b a c k u p -    
+0000000000000080 73 00 75 00 6E 00 64 00 61 00 79 00 2E 00 37 00 s u n d a y . 7    
+0000000000000090 7A 00 00 00                                     z
+
+```
+
+Here we have some backup data file. So, let's recover it and have a look! Doing a scp gives an error as "corrupt file" so you have to find another way to access the file. Luckily we can do so as we already have the web user's shell so we can copy file there.
