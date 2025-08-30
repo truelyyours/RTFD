@@ -231,4 +231,25 @@ C:\$RECYCLE.BIN\S-1-5-21-2386970044-1145388522-2932701813-1103\$IE2XMEG.7z
 
 ```
 
-Here we have some backup data file. So, let's recover it and have a look! Doing a scp gives an error as "corrupt file" so you have to find another way to access the file. Luckily we can do so as we already have the web user's shell so we can copy file there.
+Here we have some backup data file. So, let's recover it and have a look! Doing a scp gives an error as "corrupt file" so you have to find another way to access the file. Luckily we can do so as we already have the web user's shell so we can copy file there. Now you can do a `wget frizz.htb/Gibbon-LMS/wapt.7z` and go ahead with extraction etc.
+
+There are a lot of folders, but as usual, let's start with `conf`. There are ca certificates and private key. In the `wapserver.ini` you can see secrete token as well password!
+```
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz/wapt/conf]
+└──╼ [★]$ cat waptserver.ini
+[options]
+allow_unauthenticated_registration = True
+wads_enable = True
+login_on_wads = True
+waptwua_enable = True
+secret_key = ylPYfn9tTU9IDu9yssP2luKhjQijHKvtuxIzX9aWhPyYKtRO7tMSq5sEurdTwADJ
+server_uuid = 646d0847-f8b8-41c3-95bc-51873ec9ae38
+token_secret_key = 5jEKVoXmYLSpi5F7plGPB4zII5fpx0cYhGKX5QC0f7dkYpYmkeTXiFlhEJtZwuwD
+wapt_password = IXN1QmNpZ0BNZWhUZWQhUgo=
+clients_signing_key = C:\wapt\conf\ca-192.168.120.158.pem
+clients_signing_certificate = C:\wapt\conf\ca-192.168.120.158.crt
+
+[tftpserver]
+root_dir = c:\wapt\waptserver\repository\wads\pxe
+log_path = c:\wapt\log
+```
