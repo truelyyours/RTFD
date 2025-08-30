@@ -158,6 +158,34 @@ SMB         10.10.11.60     445    frizzdc          [*]  x64 (name:frizzdc) (dom
 SMB         10.10.11.60     445    frizzdc          [-] frizz.htb\f.frizzle:Jenni_Luvs_Magic23 KRB_AP_ERR_SKEW
 ```
 
-But the clock is skew so do `sudo ntpdate 10.10.11.60` and rerun the command
+But the clock is skew so do `sudo ntpdate 10.10.11.60` and rerun above command. (For some reason on my machine the clock will always get out of sync and so I had to rerun the `ntpdate` command again and again).
+
+Once we have the clock in sync, we can do `--generate-krb5-file frizz.krb5` and put this in `/etc`.
+
+```
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz]
+└──╼ [★]$ nxc smb frizzdc.frizz.htb -k -u f.frizzle -p Jenni_Luvs_Magic23 --generate-krb5-file frizz.krb5
+
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz]
+└──╼ [★]$ sudo cp frizz.krb5 /etc/krb5.conf
+
+```
+
+Then you can get the Kerberos ticket via `getTGT.py` (script from `impacket`).
+```
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz]
+└──╼ [★]$ getTGT.py frizz.htb/f.frizzle:Jenni_Luvs_Magic23
+/home/truelyyours/.local/pipx/venvs/impacket/lib/python3.11/site-packages/impacket/version.py:12: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Impacket v0.13.0.dev0+20250820.203717.835623ae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Saving ticket in f.frizzle.ccache
+```
+Now we can set the `KRB4CCNAME` to the cache file and connect via `ssh` with Kerberos ticket!
+```
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz]
+└──╼ [★]$ KRB5CCNAME=f.frizzle.ccache ssh -K f.frizzle@frizzdc.frizz.htb -v
+
+```
 
 
