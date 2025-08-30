@@ -253,3 +253,4 @@ clients_signing_certificate = C:\wapt\conf\ca-192.168.120.158.crt
 root_dir = c:\wapt\waptserver\repository\wads\pxe
 log_path = c:\wapt\log
 ```
+#TODO Things get way to complicate and I'll do this later tonight!
