@@ -92,6 +92,8 @@ PS C:\xampp\htdocs\Gibbon-LMS> whoami
 frizz\w.webservice
 ```
 
+# User flag
+
 Well, I don't know better so I look for the string `password` in all the files of current folder using `findstr -I "password" *.*`. It prints out a lot of data because we have a forgot password file too! We can exclude it and look at the data and find that `config.php` has a DB password!
 ![[Pasted image 20250829193035.png]]
 
@@ -168,7 +170,6 @@ Once we have the clock in sync, we can do `--generate-krb5-file frizz.krb5` and 
 
 ┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz]
 └──╼ [★]$ sudo cp frizz.krb5 /etc/krb5.conf
-
 ```
 
 Then you can get the Kerberos ticket via `getTGT.py` (script from `impacket`).
@@ -186,6 +187,25 @@ Now we can set the `KRB4CCNAME` to the cache file and connect via `ssh` with Ker
 ┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/thefrizz]
 └──╼ [★]$ KRB5CCNAME=f.frizzle.ccache ssh -K f.frizzle@frizzdc.frizz.htb -v
 
+PowerShell 7.4.5
+PS C:\Users\f.frizzle> whoami
+frizz\f.frizzle
 ```
 
+Now that we are in the user machine, we can get the user flag! Cheers! 🎉
+# Administrator Flag
 
+Now, I don't know if I am in luck, on some previous user did this (as the HTB ip is same for all), when I type cd, it show a hint to d into `C:\$RECYCLE.BIN`. So, I do that!
+```
+S C:\$RECYCLE.BIN\S-1-5-21-2386970044-1145388522-2932701813-1103> gci -force
+
+    Directory: C:\$RECYCLE.BIN\S-1-5-21-2386970044-1145388522-2932701813-1103       
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          10/29/2024  7:31 AM            148 $IE2XMEG.7z
+-a---          10/24/2024  9:16 PM       30416987 $RE2XMEG.7z
+-a-hs          10/29/2024  7:31 AM            129 desktop.ini
+```
+
+Here we have some deleted archive files. So, let's recover it and have a look!
