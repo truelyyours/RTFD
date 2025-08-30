@@ -143,6 +143,12 @@ Put all the data in a `hash.txt` file in format `username:hash:salt` as that is 
 And we have the password cracked! `067f746faca44f170c6cd9d7c4bdac6bc342c608687733f80ff784242b0b0c03:/aACFhikmNopqrRTVz2489:Jenni_Luvs_Magic23`
 
 Now we can simply `ssh` to the machine!
+Well, no! The firewall will block it. The S We cannot use `evil-winrm` as the firewall has blocked the ports!
+```
+PORT     STATE    SERVICE VERSION
+5985/tcp filtered wsman
+5986/tcp filtered wsmans
+```
 
 
 
