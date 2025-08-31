@@ -330,8 +330,9 @@ Now we can login to this user via `ssh` after getting the Kerberos ticket.
 └──╼ [★]$ KRB5CCNAME=m.schoolbus.ccache ssh -K m.schoolbus@frizzdc.frizz.htb
 PowerShell 7.4.5
 PS C:\Users\M.SchoolBus>
-
 ```
+
+With the Group Policy Object Ownership, we can use `SharpAbuse`'s GOP abuse exe. 
 
 
 
