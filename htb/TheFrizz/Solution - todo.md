@@ -334,6 +334,13 @@ PS C:\Users\M.SchoolBus>
 
 With the Group Policy Object Ownership, we can use `SharpAbuse`'s GOP abuse exe. 
 
+First, lets create a new GPO. 
+* `New-GPO -name "heyoh"` - Create a new user named `heyoh`
+* `New-GPLINK -name "heyoh" -target "OU=DOMAIN CONTROLLERS,DC=FRIZZ,DC=HTB"` - We want to assign the created user to the same Organization Unit (OU) as the Domain controller. You can get this info from the blood hound portal.
+![[Pasted image 20250831035045.png]]
+* 
+
+
 
 
 
