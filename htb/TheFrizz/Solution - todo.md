@@ -254,7 +254,7 @@ root_dir = c:\wapt\waptserver\repository\wads\pxe
 log_path = c:\wapt\log
 ```
 
-So, we have some password `IXN1QmNpZ0BNZWhUZWQhUgo=` which decodes to 
+So, we have some password `IXN1QmNpZ0BNZWhUZWQhUgo=` which decodes to `!suBcig@MehTed!R`. Now, taking a leap that this is some user's password and that we are doing active directory attack, we can try to brute force this password and try to login for all the user on the remote system. Checking the "Users" folder, we can some names which we can checkout.
 
 ```
 PS C:\Users> tree .
