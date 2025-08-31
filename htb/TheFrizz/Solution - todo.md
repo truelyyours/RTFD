@@ -280,9 +280,6 @@ PS C:\Users>
 ```
 
 We can also collect data using `rusthound`. It will collect a lot of data regarding available users, domain groups, permission etc. and you can analyze that data in bloodhound.
-![[Pasted image 20250831030917.png]]
-
-So, among the above users, `m.schoolbus` is a member of Group Policy Creator so if we can access to this particular user we can potential exploit the privileges to obtain root access.
 
 But first, we have to try out the password. We can extract all the usernames from the collected `rusthound` data as follows:
 ```
@@ -312,6 +309,23 @@ But first, we have to try out the password. We can extract all the usernames fro
 "NT AUTHORITY@FRIZZ.HTB"
 ```
 
+After saving all the usernames (without double quotes), you can enumerate the password with SMB login and check if it works or not:
+```bash
+nxc smb frizzdc.frizz.htb -k -u all_users.txt -p '!suBcig@MehTed!R' --continue-on-success
+```
+
+![[Pasted image 20250831031725.png]]
+
+You'll notice that only for one user we get through the authentication phase. I get the clock skew error as my system clock is not in sync with the remote server and for some reason `sudo ntpdate 10.10.11.60` does not keep the clock in sync.
+Checking in bloodhound we find that the below details
+![[Pasted image 20250831030917.png]]
+
+So, among the above users, `m.schoolbus` is a member of Group Policy Creator so if we can access to this particular user we can potential exploit the privileges to obtain root access.
+
+Now we can login to this user via `ssh` after getting the Kerberos ticket.
+```
+getTGT.py frizz.htb/m.schoolbus:'!suBcig@MehTed!R'
+```
 
 
 
