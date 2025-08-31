@@ -279,4 +279,40 @@ C:\USERS
 PS C:\Users>
 ```
 
+We can also collect data using `rusthound`. It will collect a lot of data regarding available users, domain groups, permission etc. and you can analyze that data in bloodhound.
+![[Pasted image 20250831030917.png]]
+
+So, among the above users, `m.schoolbus` is a member of Group Policy Creator so if we can access to this particular user we can potential exploit the privileges to obtain root access.
+
+But first, we have to try out the password. We can extract all the usernames from the collected `rusthound` data as follows:
+```
+┌─[htb_lab_truelyyours]─[10.10.16.82]─[truelyyours@parrot]─[~/htb/machines/thefrizz/bloodhound]
+└──╼ [★]$ cat 20250831131851_frizz-htb_users.json | jq .data[].Properties.name
+"ADMINISTRATOR@FRIZZ.HTB"
+"GUEST@FRIZZ.HTB"
+"KRBTGT@FRIZZ.HTB"
+"F.FRIZZLE@FRIZZ.HTB"
+"W.LI@FRIZZ.HTB"
+"H.ARM@FRIZZ.HTB"
+"M.SCHOOLBUS@FRIZZ.HTB"
+"D.HUDSON@FRIZZ.HTB"
+"K.FRANKLIN@FRIZZ.HTB"
+"L.AWESOME@FRIZZ.HTB"
+"T.WRIGHT@FRIZZ.HTB"
+"R.TENNELLI@FRIZZ.HTB"
+"J.PERLSTEIN@FRIZZ.HTB"
+"A.PERLSTEIN@FRIZZ.HTB"
+"P.TERESE@FRIZZ.HTB"
+"V.FRIZZLE@FRIZZ.HTB"
+"G.FRIZZLE@FRIZZ.HTB"
+"C.SANDIEGO@FRIZZ.HTB"
+"C.RAMON@FRIZZ.HTB"
+"M.RAMON@FRIZZ.HTB"
+"W.WEBSERVICE@FRIZZ.HTB"
+"NT AUTHORITY@FRIZZ.HTB"
+```
+
+
+
+
 
