@@ -354,7 +354,7 @@ PS C:\Windows\system32>
 
 Now you can get the flag from `PS C:\Users\Administrator\Desktop> type root.txt`.
 
-
+Cheers! You have done a long machine! Treat yourself to a crip cold glass of that God's nectar 🎉🥂🥂😎
 
 
 
