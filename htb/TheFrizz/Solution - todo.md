@@ -253,4 +253,28 @@ clients_signing_certificate = C:\wapt\conf\ca-192.168.120.158.crt
 root_dir = c:\wapt\waptserver\repository\wads\pxe
 log_path = c:\wapt\log
 ```
-#TODO Things get way to complicate and I'll do this later tonight!
+
+So, we have some password `IXN1QmNpZ0BNZWhUZWQhUgo=` which decodes to 
+
+```
+PS C:\Users> tree .
+Folder PATH listing
+Volume serial number is 00000225 D129:C3DA
+C:\USERS
+├───Administrator
+├───f.frizzle
+│   ├───Desktop
+│   ├───Documents
+│   ├───Downloads
+│   ├───Favorites
+│   ├───Links
+│   ├───Music
+│   ├───Pictures
+│   ├───Saved Games
+│   └───Videos
+├───M.SchoolBus
+├───Public
+├───v.frizzle
+└───w.Webservice
+PS C:\Users>
+```
