@@ -31,10 +31,11 @@ admissions@guardian.htb
 ```
 We also have have subdomain or `portal.guardian.htb` for student login. So, add that to hosts too.
 
-Looking at the guider link `http://portal.guardian.htb/static/downloads/Guardian_University_Student_Portal_Guide.pdf`, we find the default password of `GU1234`. Trying this for the known students, it works on **GU0142023**.
+Looking at the guide link `http://portal.guardian.htb/static/downloads/Guardian_University_Student_Portal_Guide.pdf`, we find the default password of `GU1234`. Trying this for the known students, it works on **GU0142023**.
 
-Looking at the chats, the URL is like: `/student/chat.php?chat_users[0]=13&chat_users[1]=14`, where 13 adn 14 are the user's ids. So, trying out to manipulate the  ids, it turn you can read chat between any two users!
-Using this vulnerability, you can get many passwords!
+Looking at the chats, the URL is like: `/student/chat.php?chat_users[0]=13&chat_users[1]=14`, where 13 and 14 are the user's ids. So, trying out to manipulate the  ids, it turns out you can read chat between any two users!
+
+Using this vulnerability, you can read chat between admin and user `jamin.enockson`
 ```
 gitea:jamil.enockson:DHsNnk3V503
 ```
