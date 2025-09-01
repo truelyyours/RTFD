@@ -22,10 +22,17 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 14.34 seconds
 ```
 
-We have `ssh` and port 80 open redirecting to `guardian.htb`. So, add this to `/tc/hosts` and the link open a "Guardian University" website. There are some student's review with their email id, so let's note that.
+We have `ssh` and port 80 open redirecting to `guardian.htb`. So, add this to `/etc/hosts` and the link open a "Guardian University" website. There are some student's review with their email id, so let's note that.
 ```
 GU0142023@guardian.htb
 GU6262023@guardian.htb
 GU0702025@guardian.htb
 admissions@guardian.htb
 ```
+We also have have subdomain or `portal.guardian.htb` for student login. So, add that to hosts too.
+
+Looking at the guider link `http://portal.guardian.htb/static/downloads/Guardian_University_Student_Portal_Guide.pdf`, we find the default password of `GU1234`. Trying this for the known students, it works on **GU0142023**.
+
+Some other ids, GU6262023 and probably professor: mireielle.feek
+
+Among the assignments, we can upload .docx and .xlsx file at `http://portal.guardian.htb/student/submission.php?assignment_id=15`. 
