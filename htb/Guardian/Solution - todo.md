@@ -43,3 +43,8 @@ gitea:jamil.enockson:DHsNnk3V503
 
 Among the assignments, we can upload .docx and .xlsx file at `http://portal.guardian.htb/student/submission.php?assignment_id=15`. 
 `guardiandb` is the database name because I somehow found an error file uploading a file!
+
+Given there is `gitea` stuff, I decided to fuzz it:
+```
+ffuf -c -u "http://guardian.htb" -H "HOST: FUZZ.guardian.htb" -w ~/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt -t 100 -fc 301
+```
