@@ -30,5 +30,44 @@ So, add this in `/etc/hosts` and visiting the site lands us to "Era Storage"
 ![[Pasted image 20250902020234.png]]
 
 So, we have sign in page, but no creds. Just a blind guess (after 30 mins of poking around with different tools), I try `http://file.era.htb/register.php` and I land on registration page and you can now create an account!
+Better way to achieve this is:
+```
+┌──(truelyyours㉿kali)-[~/htb/machines/era]
+└─$ gobuster dir -u http://file.era.htb/ -w /usr/share/wordlists/dirb/common.txt -t 50 --exclude-length 6765 -x php
+===============================================================
+Gobuster v3.8
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://file.era.htb/
+[+] Method:                  GET
+[+] Threads:                 50
+[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
+[+] Negative Status codes:   404
+[+] Exclude Length:          6765
+[+] User Agent:              gobuster/3.8
+[+] Extensions:              php
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/.htpasswd            (Status: 403) [Size: 162]
+/.hta                 (Status: 403) [Size: 162]
+/.htaccess            (Status: 403) [Size: 162]
+/assets               (Status: 301) [Size: 178] [--> http://file.era.htb/assets/]
+/download.php         (Status: 302) [Size: 0] [--> login.php]
+/files                (Status: 301) [Size: 178] [--> http://file.era.htb/files/]
+/images               (Status: 301) [Size: 178] [--> http://file.era.htb/images/]
+/layout.php           (Status: 200) [Size: 0]
+/LICENSE              (Status: 200) [Size: 34524]
+/login.php            (Status: 200) [Size: 9214]
+/logout.php           (Status: 200) [Size: 70]
+/manage.php           (Status: 302) [Size: 0] [--> login.php]
+/register.php         (Status: 200) [Size: 3205]
+/upload.php           (Status: 302) [Size: 0] [--> login.php]
+Progress: 9226 / 9226 (100.00%)
+===============================================================
+Finished
+===============================================================
+```
 
-But aft
+But after creating the account and trying to login, you get the same error that "Invalid username or password"!!
