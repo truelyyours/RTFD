@@ -29,4 +29,6 @@ The site has no links and no results in gobuster. However `fuff` does give somet
 So, add this in `/etc/hosts` and visiting the site lands us to "Era Storage"
 ![[Pasted image 20250902020234.png]]
 
-So, we have sign in page, but no creds.
+So, we have sign in page, but no creds. Just a blind guess (after 30 mins of poking around with different tools), I try `http://file.era.htb/register.php` and I land on registration page and you can now create an account!
+
+But aft
