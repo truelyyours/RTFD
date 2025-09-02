@@ -22,3 +22,10 @@ Nmap done: 1 IP address (1 host up) scanned in 15.03 seconds
 
 So, we have ftp (no anonymous login) and http. The website is pretty slick with following web stack:
 ![[Pasted image 20250902014209.png]]
+
+The site has no links and no results in gobuster. However `fuff` does give something interesting - `ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt -u http://era.htb -H "Host: FUZZ.era.htb"` - returns
+![[Pasted image 20250902020158.png]]
+
+So, add this in `/etc/hosts` and visiting the site lands us to "Era Storage"
+![[Pasted image 20250902020234.png]]
+
