@@ -42,3 +42,4 @@ gitea:jamil.enockson:DHsNnk3V503
 
 
 Among the assignments, we can upload .docx and .xlsx file at `http://portal.guardian.htb/student/submission.php?assignment_id=15`. 
+guardiandb is the databse name because I somehow found an error file uploading a file!
