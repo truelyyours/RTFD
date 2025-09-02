@@ -23,5 +23,19 @@ Nmap done: 1 IP address (1 host up) scanned in 11.62 seconds
 ```
 
 So, `ssh` and `http` are running.  The website is some image upload and sharing site. You can download source code too!
+![[Pasted image 20250902042657.png]]
 
-Although, after uploading the image, you cannot "Copy Shareable Link"! The README in source code does 
+Although, after uploading the image, you cannot "Copy Shareable Link"! The README in source code does instruct that you can access the image via `http:localhost:8080/s/{id}` where `id` is some unique identifier
+
+We do get a id and password:
+```
+┌──(truelyyours㉿kali)-[~/htb/machines/strutted/source_code]
+└─$ cat tomcat-users.xml
+<?xml version='1.0' encoding='utf-8'?>
+
+<tomcat-users>
+    <role rolename="manager-gui"/>
+    <role rolename="admin-gui"/>
+    <user username="admin" password="skqKY6360z!Y" roles="manager-gui,admin-gui"/>
+</tomcat-users>
+```
