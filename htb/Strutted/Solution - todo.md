@@ -39,3 +39,7 @@ We do get a id and password:
     <user username="admin" password="skqKY6360z!Y" roles="manager-gui,admin-gui"/>
 </tomcat-users>
 ```
+
+Looking at the source code, the MVC is (Apache) `Struts2` with version `6.3.0.1`.
+
+As we can upload file, googling CVE for this version, there is [CVE-2024-53677](https://www.cve.org/CVERecord?id=CVE-2024-53677) which 
