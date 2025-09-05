@@ -46,8 +46,8 @@ As we can upload file, googling CVE for this version, there is [CVE-2024-53677](
 
 I tried the exploit in the above posts, but it does not work directly. The working of the exploit is also not straight forward. So, I look deeper into what causes the vulnerability and how can we craft our exploit. This post explains quite well: https://help.tanium.com/bundle/CVE-2024-31497/page/VERT/CVE-2024-53677/Understanding_Apache_Struts.htm.
 
-So, Struts has a series of Interceptor classes that run by default, including one called the `FileUploadInterceptor`. 
-
+So, Struts has a series of Interceptor classes that run by default, including one called the `FileUploadInterceptor`. Struts has this concept of the object graph navigation library (OGNL), which has a stack. If there are two objects on the stack, and it allows referencing some property, say `name`, and that will work down the stack looking for the first object that has that property and return that.
+If a POST request triggers the `FileUploadInterceptor`, you can have other POST parameters that reference parts of that object by the OGNL stack. In practice, that looks like:
 
 
 
