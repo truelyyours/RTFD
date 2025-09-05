@@ -114,4 +114,6 @@ However, we cannot access the file directly at `/uploads/[date]/[filename]`. As 
 
 As this is java application, we store our file as `temp.jsp`.  (I had my "No Script" extension enabled so by default the `.jsp` file was not being rendered and it took some time to figure it out. Don't make the same mistake!). But as in the above mentioned path it is processed as image, so I try upload in parent folder and so on an eventually I can "read" the file i.e. render/process it on browser as a `jsp` file!
 
+![[Pasted image 20250905185455.png]]
 
+You can use any valid `js`
