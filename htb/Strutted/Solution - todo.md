@@ -46,6 +46,8 @@ As we can upload file, googling CVE for this version, there is [CVE-2024-53677](
 
 I tried the exploit in the above posts, but it does not work directly. The working of the exploit is also not straight forward. So, I look deeper into what causes the vulnerability and how can we craft our exploit. This post explains quite well: https://help.tanium.com/bundle/CVE-2024-31497/page/VERT/CVE-2024-53677/Understanding_Apache_Struts.htm.
 
+So, Struts has a series of Interceptor classes that run by default, including one called the `FileUploadInterceptor`. 
+
 
 
 
