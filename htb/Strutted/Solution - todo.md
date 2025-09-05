@@ -112,6 +112,6 @@ This portal only allows image upload. Upload any other file format fails. Howeve
 However, we cannot access the file directly at `/uploads/[date]/[filename]`. As per the code, it actually provides us with a sharable link at endpoint `/s`.  But that link simply tries to render the file as an image (PNG in our case). We want the browser to process the file.
 ![[Pasted image 20250905181824.png]]
 
-As this is java application, we store our file as `temp.jsp`. 
+As this is java application, we store our file as `temp.jsp`.  (I had my "No Script" extension enabled so by default the `.jsp` file was not being rendered and it took some time to figure it out. Don't make the same mistake!). But as in the above mentioned path it is processed as image, so I try upload in parent folder and so on an eventually I can "read" the file i.e. render/process it on browser as a `jsp` file!
 
 
