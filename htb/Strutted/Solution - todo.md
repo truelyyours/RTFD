@@ -109,6 +109,9 @@ NOTE: One important thing to consider which I found after reading about custom p
 
 This portal only allows image upload. Upload any other file format fails. However, any image file with valid magic header can be uploaded even though the rest of the file is corrupted. So we can sort of embed the script inside the "PNG" file keeping the header same as PNG and providing path i.e. writing the file to a path which we can access/read.
 
-However, we cannot access the file directly at `/uploads/[date]/[filename]`. As per the code, it actually provides us with a sharable link at endpoint `/s`.  But that link simply tries to render the file as a photo (PNG in our case). We want the browser to process the file.
+However, we cannot access the file directly at `/uploads/[date]/[filename]`. As per the code, it actually provides us with a sharable link at endpoint `/s`.  But that link simply tries to render the file as an image (PNG in our case). We want the browser to process the file.
+![[Pasted image 20250905181824.png]]
+
+
 
 
